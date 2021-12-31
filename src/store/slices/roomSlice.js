@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchApartments } from '../../api/apartment';
-import { createRoom as createRoomAPI } from '../../api/room';
+import { createRoom as createRoomAPI, fetchRooms } from '../../api/room';
 
-const getRooms = createAsyncThunk('room/get', async params => {
-  const { apartmentId } = params;
-  const data = await fetchApartments();
+const getRooms = createAsyncThunk('room/get', async apartmentId => {
+  const data = await fetchRooms(apartmentId);
+  return data;
 });
 
 const createRoom = createAsyncThunk('room/create', async ({ room }) => {
@@ -43,12 +42,10 @@ const roomSlice = createSlice({
     builder.addCase(createRoom.fulfilled, state => {
       state.loading = false;
       state.error = '';
-      console.log(2);
     });
     builder.addCase(createRoom.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
-      console.log(3);
     });
   },
 });

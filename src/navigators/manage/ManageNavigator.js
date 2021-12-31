@@ -6,8 +6,16 @@ import {
   ROOM_EDIT_SCREEN,
   SERVICES,
   SERVICE_EDIT_SCREEN,
+  TENANT,
+  TENANT_EDIT,
 } from '../../constants/navigation';
-import { ApartmentEditScreen, RoomEditScreen, ServicesScreen } from '../../screens/manage';
+import {
+  ApartmentEditScreen,
+  RoomEditScreen,
+  ServicesScreen,
+  TenantEditScreen,
+  TenantsScreen,
+} from '../../screens/manage';
 import ServiceEditScreen from '../../screens/manage/ServiceEditScreen';
 import { MainScreen } from '../../screens/search';
 import HomeNavigator from './HomeNavigator';
@@ -25,6 +33,8 @@ export default React.memo(() => {
       <Stack.Screen name={SERVICE_EDIT_SCREEN} component={ServiceEditScreen} />
       <Stack.Screen name={'APARTMENT'} component={ApartmentNavigator} />
       <Stack.Screen name={ROOM_EDIT_SCREEN} component={RoomEditScreen} />
+      <Stack.Screen name={TENANT} component={TenantsScreen} />
+      <Stack.Screen name={TENANT_EDIT} component={TenantEditScreen} />
     </Stack.Navigator>
   );
 });
