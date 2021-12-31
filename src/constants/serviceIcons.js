@@ -1,0 +1,15 @@
+export default [
+  'wifi',
+  'water',
+  'fire-extinguisher',
+  'tower-fire',
+  'shield',
+  'tshirt-crew-outline',
+  'air-filter',
+  'fan',
+  'air-conditioner',
+  'trash-can-outline',
+  'motorbike',
+  'washing-machine',
+  'lightning-bolt-outline',
+];

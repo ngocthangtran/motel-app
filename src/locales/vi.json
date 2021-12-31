@@ -1,0 +1,14 @@
+{
+  "hello": "Hello",
+  "translate": "This line is translated",
+
+  "dashboard_services": "Dịch vụ",
+  "dashboard_record": "Điện nước",
+  "dashboard_bills": "Hóa đơn",
+  "dashboard_tenants": "Người thuê",
+  "dashboard_contract": "Hợp đồng",
+  "dashboard_deposit": "Cọc giữ chỗ",
+
+  "account_alert_logout": "Đăng xuất",
+  "account_alert_logout_body": "Đăng xuất khỏi tài khoản?"
+}
