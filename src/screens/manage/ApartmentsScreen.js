@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { FAB, Searchbar, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,22 +11,35 @@ import { getApartment } from '../../store/slices/apartment';
 function ApartmentScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { apartments, loading, error } = useSelector(state => state.apartment.get);
+  const { apartments: building, loading, error } = useSelector(state => state.apartment.get);
+  const [apartments, setAparments] = useState(building)
 
   useEffect(() => {
     dispatch(getApartment());
   }, []);
 
   const handleFabPress = () => navigation.navigate(APARTMENT_EDIT_SCREEN);
+
   const handleApartmentPress = a => () => {
     navigation.navigate('APARTMENT', a);
   };
+
+  const onChangeText = (text) => {
+    const data = [];
+    building.forEach(element => {
+      const result = element.name.search(text)
+      if (result !== -1) {
+        data.push(element)
+      }
+    });
+    setAparments(data)
+  }
   return (
     <Surface style={styles.container}>
       <AppBar title='Tòa nhà' />
       <Surface style={styles.contentContainer}>
         <AfterInteractions>
-          <Searchbar placeholder='Tìm tòa nhà' style={styles.searchBar} />
+          <Searchbar placeholder='Tìm tòa nhà' style={styles.searchBar} onChangeText={onChangeText}  />
           <FlatList
             refreshing={loading}
             numColumns={2}
