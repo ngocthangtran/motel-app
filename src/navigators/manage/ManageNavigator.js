@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import {
   APARTMENT_EDIT_SCREEN,
+  CONTRACT,
   MAIN,
   ROOM_EDIT_SCREEN,
   SERVICES,
@@ -11,6 +12,7 @@ import {
 } from '../../constants/navigation';
 import {
   ApartmentEditScreen,
+  ContractScreen,
   RoomEditScreen,
   ServicesScreen,
   TenantEditScreen,
@@ -35,6 +37,7 @@ export default React.memo(() => {
       <Stack.Screen name={ROOM_EDIT_SCREEN} component={RoomEditScreen} />
       <Stack.Screen name={TENANT} component={TenantsScreen} />
       <Stack.Screen name={TENANT_EDIT} component={TenantEditScreen} />
+      <Stack.Screen name={CONTRACT} component={ContractScreen} />
     </Stack.Navigator>
   );
 });
