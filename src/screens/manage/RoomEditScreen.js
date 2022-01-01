@@ -19,7 +19,8 @@ import {
 import { getApartmentServices } from '../../store/slices/serviceSlice';
 import * as Yup from 'yup';
 import roomCreateMapper from '../../utils/mappers/roomCreateMapper';
-import { createRoom } from '../../store/slices/roomSlice';
+import { createRoom, reloadRoom } from '../../store/slices/roomSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(1).required(),
@@ -38,12 +39,23 @@ function RoomEditScreen(props) {
     dispatch(getApartmentServices({ apartmentId: route.params.buildingId }));
   }, []);
 
-  const handleSubmit = values => {
+  const handleSubmit = async values => {
     const room = roomCreateMapper(values, route.params.buildingId);
-    dispatch(createRoom({ room }))
-      .unwrap()
-      .then(() => {
-        alert('Room Created');
+    dispatch(createRoom({ room })).unwrap()
+      .then((res) => {
+        const loadRoomAction = reloadRoom({
+          type: 'add',
+          data: {
+            roomId: res.roomId,
+            name: res.name,
+            contractCount: 0,
+            renterCount: 0,
+            price: "Chưa định giá",
+            status: "Chưa thuê"
+          }
+        })
+        dispatch(loadRoomAction)
+        alert("Tạo thành công");
       })
       .catch(() => {
         alert('Cannot create room');

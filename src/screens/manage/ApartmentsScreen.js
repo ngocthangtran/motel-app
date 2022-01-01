@@ -18,6 +18,9 @@ function ApartmentScreen(props) {
     dispatch(getApartment());
   }, []);
 
+  useEffect(() => {
+    setAparments(building)
+  }, [building])
   const handleFabPress = () => navigation.navigate(APARTMENT_EDIT_SCREEN);
 
   const handleApartmentPress = a => () => {
@@ -39,7 +42,7 @@ function ApartmentScreen(props) {
       <AppBar title='Tòa nhà' />
       <Surface style={styles.contentContainer}>
         <AfterInteractions>
-          <Searchbar placeholder='Tìm tòa nhà' style={styles.searchBar} onChangeText={onChangeText}  />
+          <Searchbar placeholder='Tìm tòa nhà' style={styles.searchBar} onChangeText={onChangeText} />
           <FlatList
             refreshing={loading}
             numColumns={2}

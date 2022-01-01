@@ -7,8 +7,7 @@ const getRooms = createAsyncThunk('room/get', async apartmentId => {
 });
 
 const createRoom = createAsyncThunk('room/create', async ({ room }) => {
-  await createRoomAPI(room);
-  console.log('1');
+  return await createRoomAPI(room);
 });
 
 const roomSlice = createSlice({
@@ -17,6 +16,13 @@ const roomSlice = createSlice({
     rooms: [],
     loading: false,
     error: '',
+  },
+  reducers: {
+    reloadRoom: (state, action) => {
+      if (action.payload.type === 'add') {
+        state.rooms.push(action.payload.data);
+      }
+    }
   },
   extraReducers: builder => {
     builder.addCase(getRooms.pending, (state, action) => {
@@ -51,4 +57,5 @@ const roomSlice = createSlice({
 });
 
 export { getRooms, createRoom };
+export const { reloadRoom } = roomSlice.actions
 export default roomSlice.reducer;
