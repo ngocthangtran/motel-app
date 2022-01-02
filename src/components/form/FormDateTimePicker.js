@@ -29,6 +29,10 @@ function FormDateTimePicker({
     if (event.type === 'set') setValue(name, selectedDate);
     onClose();
   };
+  const getPlaceholder = value => {
+    if (mode === 'time') return value && value.getHours() + ' : ' + value.getMinutes();
+    else return value && value.getDate() + '/' + value.getMonth() + 1 + '/' + value.getFullYear();
+  };
 
   return (
     <FormFieldWrapper label={label} error={errors[name]?.message} required={required}>
@@ -42,8 +46,8 @@ function FormDateTimePicker({
               <TextInput
                 textAlign='center'
                 editable={false}
-                value={value && value.getHours() + ' : ' + value.getMinutes()}
-                placeholder={'-- : --'}
+                value={getPlaceholder(value)}
+                placeholder={mode === 'time' ? '-- : --' : '__ /__ /__'}
                 placeholderTextColor={colors.placeholder}
                 style={[styles.textInput, { color: colors.text }]}
               />

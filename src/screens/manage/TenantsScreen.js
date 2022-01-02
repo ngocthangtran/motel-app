@@ -3,25 +3,16 @@ import React from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { AppBar } from '../../components';
 import { FAB } from '../../components/common';
-import { CONTRACT } from '../../constants/navigation';
+import { CONTRACT, TENANT_EDIT } from '../../constants/navigation';
 
 function TenantScreen(props) {
   const navigation = useNavigation();
-  const { params: room } = useRoute();
-  const handleCreatePress = () => navigation.navigate(CONTRACT, room.roomId);
-  const handleFabPress = () => {
-    if (!room.contractCount) {
-      Alert.alert('Phòng chưa có hợp đồng', 'Tạo hợp đồng ngay', [
-        { text: 'Hủy' },
-        { text: 'Tạo', onPress: handleCreatePress },
-      ]);
-    }
-  };
+  const handleCreatePress = () => navigation.navigate(TENANT_EDIT);
 
   return (
     <View style={styles.container}>
       <AppBar title='Người thuê' />
-      <FAB onPress={handleFabPress} />
+      <FAB onPress={handleCreatePress} />
     </View>
   );
 }

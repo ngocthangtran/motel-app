@@ -11,7 +11,8 @@ import nearbyReducer from './slices/nearbySlice';
 import searchReducer from './slices/searchSlice';
 import serviceReducer from './slices/serviceSlice';
 import apartmentReducer from './slices/apartment';
-import getRoomReducer from './slices/roomSlice';
+import roomReducer from './slices/roomSlice';
+import tenantReducer from './slices/tenantSlice';
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     search: searchReducer,
     service: serviceReducer,
     apartment: apartmentReducer,
-    room: getRoomReducer,
+    room: roomReducer,
+    tenant: tenantReducer,
   },
 });
