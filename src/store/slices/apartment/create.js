@@ -3,7 +3,7 @@ import { createApartment as createApartmentAPI } from '../../../api/apartment';
 
 const createApartment = createAsyncThunk('apartment/create', async params => {
   const { apartment } = params;
-  await createApartmentAPI(apartment);
+  return await createApartmentAPI(apartment);
 });
 
 const createApartmentSlice = createSlice({

@@ -13,6 +13,13 @@ const getApartmentSlice = createSlice({
     loading: false,
     error: null,
   },
+  reducers: {
+    reloadApartment: (state, action) => {
+      if (action.payload.type === 'add') {
+        state.apartments.push(action.payload.data);
+      }
+    }
+  },
   extraReducers: builder => {
     builder.addCase(getApartment.pending, state => {
       state.loading = true;
@@ -33,4 +40,5 @@ const getApartmentSlice = createSlice({
 });
 
 export { getApartment };
+export const { reloadApartment } = getApartmentSlice.actions;
 export default getApartmentSlice.reducer;

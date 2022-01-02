@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getServices } from '../../store/slices/serviceSlice';
 import { createApartment } from '../../store/slices/apartment';
 import { apartmentCreateMapper } from '../../utils/mappers';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { reloadApartment } from '../../store/slices/apartment/get';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(6).required(),
@@ -35,9 +37,23 @@ function ApartmentEditScreen(props) {
     if (apartmentServices.length === 0) dispatch(getServices());
   }, []);
 
-  const handleSubmit = values => {
+  const handleSubmit = async values => {
     const apartment = apartmentCreateMapper(values);
-    dispatch(createApartment({ apartment }));
+    const dispatchAction = await dispatch(createApartment({ apartment }))
+    const result = await unwrapResult(dispatchAction);
+    if (result.building) {
+      const data = {
+        buildingId: result.building.buildingId,
+        name: result.building.name,
+        address: result.building.address
+      }
+      const uploadBdAction = reloadApartment({
+        type: "add",
+        data
+      });
+      dispatch(uploadBdAction);
+      return
+    }
   };
 
   return (
