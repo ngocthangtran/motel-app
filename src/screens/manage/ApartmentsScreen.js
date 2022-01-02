@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import { View, StyleSheet, Text, FlatList, Pressable } from 'react-native';
 import { FAB, Searchbar, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApartmentItem, AppBar } from '../../components';
@@ -51,11 +51,11 @@ function ApartmentScreen(props) {
             columnWrapperStyle={{ justifyContent: 'space-between' }}
             renderItem={({ item }) => {
               return (
-                <ApartmentItem
-                  name={item.name}
-                  address={item.address}
-                  onPress={handleApartmentPress(item)}
-                />
+                  <ApartmentItem
+                    name={item.name}
+                    address={item.address}
+                    onPress={handleApartmentPress(item)}
+                  />
               );
             }}
           />

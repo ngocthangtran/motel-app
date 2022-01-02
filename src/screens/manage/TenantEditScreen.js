@@ -6,7 +6,7 @@ import { Form, FormDateTimePicker, FormSubmitButton, FormTextInput } from '../..
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { tenantCreateMapper } from '../../utils/mappers';
-import { createTenant } from '../../store/slices/tenantSlice';
+import { createTenant, uploadTenant } from '../../store/slices/tenantSlice';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(1).required(),
@@ -25,10 +25,16 @@ function TenantEditScreen(props) {
     const tenant = tenantCreateMapper(values);
     dispatch(createTenant({ tenant }))
       .unwrap()
-      .then(() => {
+      .then((res) => {
+        console.log(typeof (res))
+        dispatch(uploadTenant({
+          type: "add",
+          data: res
+        }))
         alert('ok');
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
         alert('error');
       });
   };

@@ -7,7 +7,7 @@ import {
 
 const createTenant = createAsyncThunk('tenant/create', async params => {
   const { tenant } = params;
-  await createTenantAPI(tenant);
+  return await createTenantAPI(tenant);
 });
 
 const getTenants = createAsyncThunk('tenant/getAll', async () => {
@@ -25,6 +25,15 @@ const tenantSlice = createSlice({
     loading: false,
     error: null,
     tenants: [],
+  },
+  reducers: {
+    uploadTenant: (state, action) => {
+      if (action.payload.type === "add") {
+        state.tenants.push(action.payload.data)
+      } else if (action.payload.type === "remove") {
+        state.tenants.splice(action.payload.index, 1);
+      }
+    }
   },
   extraReducers: builder => {
     builder.addCase(createTenant.pending, (state, action) => {
@@ -72,4 +81,5 @@ const tenantSlice = createSlice({
 });
 
 export { createTenant, getTenants, deleteTenant };
+export const { uploadTenant } = tenantSlice.actions
 export default tenantSlice.reducer;
