@@ -14,6 +14,6 @@ export const editTenant = tenant => {
   return apiClient.post(`${endpoint}/repair`, tenant);
 };
 
-export const deleteTenant = tenant => {
-  return apiClient.delete(`${endpoint}/delete/${tenant.renterId}`);
+export const deleteTenant = tenantId => {
+  return apiClient.delete(`${endpoint}/delete/${tenantId}`);
 };

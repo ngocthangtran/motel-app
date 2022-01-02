@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createTenant as createTenantAPI, fetchTenants } from '../../api/tenant';
+import {
+  createTenant as createTenantAPI,
+  fetchTenants,
+  deleteTenant as deleteTenantAPI,
+} from '../../api/tenant';
 
 const createTenant = createAsyncThunk('tenant/create', async params => {
   const { tenant } = params;
@@ -9,6 +13,10 @@ const createTenant = createAsyncThunk('tenant/create', async params => {
 const getTenants = createAsyncThunk('tenant/getAll', async () => {
   const data = await fetchTenants();
   return data;
+});
+
+const deleteTenant = createAsyncThunk('tenant/delete', async tenantId => {
+  await deleteTenantAPI(tenantId);
 });
 
 const tenantSlice = createSlice({
@@ -45,8 +53,23 @@ const tenantSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+
+    builder.addCase(deleteTenant.pending, (state, action) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builder.addCase(deleteTenant.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+    });
+
+    builder.addCase(deleteTenant.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
 
-export { createTenant, getTenants };
+export { createTenant, getTenants, deleteTenant };
 export default tenantSlice.reducer;
