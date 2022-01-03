@@ -6,7 +6,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 function RoomItem({ name = '', price = '', onPress }) {
   const { colors } = useTheme();
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
+    <TouchableWithoutFeedback
+      onPress={onPress}
+      onLongPress={() => {
+        alert('ok');
+      }}
+    >
       <Surface style={styles.container}>
         <MaterialCommunityIcons name='microsoft-windows' size={80} color='#7f7f7f' />
         <Text style={{ color: colors.primary, marginVertical: 12, fontWeight: 'bold' }}>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, FlatList, Pressable } from 'react-native';
 import { FAB, Searchbar, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { ApartmentItem, AppBar } from '../../components';
+import { ApartmentItem, AppBar, LongPress } from '../../components';
 import { AfterInteractions } from '../../components/common';
 import { APARTMENT_EDIT_SCREEN } from '../../constants/navigation';
 import { getApartment } from '../../store/slices/apartment';
@@ -12,37 +12,50 @@ function ApartmentScreen(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { apartments: building, loading, error } = useSelector(state => state.apartment.get);
-  const [apartments, setAparments] = useState(building)
+  const [apartments, setApartments] = useState(building);
 
   useEffect(() => {
     dispatch(getApartment());
   }, []);
 
   useEffect(() => {
-    setAparments(building)
-  }, [building])
+    setApartments(building);
+  }, [building]);
   const handleFabPress = () => navigation.navigate(APARTMENT_EDIT_SCREEN);
 
   const handleApartmentPress = a => () => {
     navigation.navigate('APARTMENT', a);
   };
 
-  const onChangeText = (text) => {
+  const onChangeText = text => {
     const data = [];
     building.forEach(element => {
-      const result = element.name.search(text)
+      const result = element.name.search(text);
       if (result !== -1) {
-        data.push(element)
+        data.push(element);
       }
     });
-    setAparments(data)
-  }
+    setApartments(data);
+  };
+
+  const handleDelete = a => () => {
+    alert('delete ' + a.name);
+  };
+
+  const handleEdit = a => () => {
+    alert('edit ' + a.name);
+  };
+
   return (
     <Surface style={styles.container}>
       <AppBar title='Tòa nhà' />
       <Surface style={styles.contentContainer}>
         <AfterInteractions>
-          <Searchbar placeholder='Tìm tòa nhà' style={styles.searchBar} onChangeText={onChangeText} />
+          <Searchbar
+            placeholder='Tìm tòa nhà'
+            style={styles.searchBar}
+            onChangeText={onChangeText}
+          />
           <FlatList
             refreshing={loading}
             numColumns={2}
@@ -51,11 +64,13 @@ function ApartmentScreen(props) {
             columnWrapperStyle={{ justifyContent: 'space-between' }}
             renderItem={({ item }) => {
               return (
-                  <ApartmentItem
-                    name={item.name}
-                    address={item.address}
-                    onPress={handleApartmentPress(item)}
-                  />
+                <ApartmentItem
+                  name={item.name}
+                  address={item.address}
+                  onPress={handleApartmentPress(item)}
+                  onDelete={handleDelete(item)}
+                  onEdit={handleEdit(item)}
+                />
               );
             }}
           />

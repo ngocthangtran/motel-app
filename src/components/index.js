@@ -6,3 +6,4 @@ export { default as AppBar } from './AppBar';
 export { default as ServiceItem } from './ServiceItem';
 export { default as ApartmentItem } from './ApartmentItem';
 export { default as RoomItem } from './RoomItem';
+export { default as Pressable } from './Pressable';

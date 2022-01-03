@@ -20,42 +20,47 @@ function TenantScreen(props) {
     dispatch(getTenants());
   }, []);
   useEffect(() => {
-    setTenats(renters)
-  }, [renters])
+    setTenats(renters);
+  }, [renters]);
 
   const handleDeleteTenant =
     ({ renterId }) =>
-      () => {
-        dispatch(deleteTenant(renterId))
-          .unwrap()
-          .then(() => {
-            alert('ok');
-            const index = renters.findIndex(el => el.renterId === renterId)
-            if (index === -1) return alert("Có gì đó sai sai")
-            dispatch(uploadTenant({
-              type: "remove",
-              index
-            }))
-          })
-          .catch(e => {
-            alert('error');
-          });
-      };
-  const onChangeText = (text) => {
+    () => {
+      dispatch(deleteTenant(renterId))
+        .unwrap()
+        .then(() => {
+          const index = renters.findIndex(el => el.renterId === renterId);
+          if (index === -1) return alert('Có gì đó sai sai');
+          dispatch(
+            uploadTenant({
+              type: 'remove',
+              index,
+            })
+          );
+        })
+        .catch(e => {
+          alert('error');
+        });
+    };
+  const onChangeText = text => {
     const data = [];
     renters.forEach(element => {
-      const result = element.name.toLowerCase().search(text.toLowerCase())
+      const result = element.name.toLowerCase().search(text.toLowerCase());
       if (result !== -1) {
-        data.push(element)
+        data.push(element);
       }
     });
-    setTenats(data)
-  }
+    setTenats(data);
+  };
   return (
     <View style={styles.container}>
       <AppBar title='Người thuê' />
       <Surface style={styles.contentContainer}>
-        <Searchbar placeholder='Tìm người thuê' style={styles.searchBar} onChangeText={onChangeText} />
+        <Searchbar
+          placeholder='Tìm người thuê'
+          style={styles.searchBar}
+          onChangeText={onChangeText}
+        />
         <FlatList
           data={tenants}
           keyExtractor={item => item.renterId}
