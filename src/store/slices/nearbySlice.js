@@ -20,7 +20,6 @@ const nearbySlice = createSlice({
       state.error = '';
     });
     builder.addCase(getNearbyPost.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.posts = action.payload;
       state.error = '';

@@ -27,6 +27,8 @@ export const TENANT_EDIT = 'TENANT_EDIT';
 export const UTIL = 'UTIL';
 export const MANAGE_HOME = 'MANAGE_HOME';
 export const SEARCH = 'SEARCH';
+export const NEARBY_MAP_SCREEN = 'NEARBY_MAP_SCREEN';
+export const NEARBY_LIST_SCREEN = 'NEARBY_LIST_SCREEN';
 
 //
 export const APARTMENT_EDIT_SCREEN = 'APARTMENT_EDIT_SCREEN';

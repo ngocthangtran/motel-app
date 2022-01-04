@@ -63,7 +63,6 @@ function ServiceEditScreen(props) {
       icon,
     };
     if (item) {
-      console.log('a');
       service.serviceId = item.serviceId;
       dispatch(updateService({ service }));
     } else {

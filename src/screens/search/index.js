@@ -8,3 +8,5 @@ export { default as SearchScreen } from './SearchScreen';
 export { default as ViewMoreScreen } from './ViewMoreScreen';
 export { default as NearbyScreen } from './NearbyScreen';
 export { default as PostedScreen } from './PostedScreen';
+export { default as NearbyMapScreen } from './NearbyMapScreen';
+export { default as NearbyListScreen } from './NearbyListScreen';
