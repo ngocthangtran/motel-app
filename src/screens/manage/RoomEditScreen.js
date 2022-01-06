@@ -57,7 +57,7 @@ function RoomEditScreen(props) {
         dispatch(loadRoomAction)
         alert("Tạo thành công");
       })
-      .catch(() => {
+      .catch((err) => {
         alert('Cannot create room');
       });
   };

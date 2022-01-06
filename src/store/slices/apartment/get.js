@@ -17,7 +17,10 @@ const getApartmentSlice = createSlice({
     reloadApartment: (state, action) => {
       if (action.payload.type === 'add') {
         state.apartments.push(action.payload.data);
+      } else if (action.payload.type === 'remove') {
+        state.apartments.splice(action.payload.index, 1)
       }
+
     }
   },
   extraReducers: builder => {

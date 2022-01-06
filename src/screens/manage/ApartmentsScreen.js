@@ -7,6 +7,8 @@ import { ApartmentItem, AppBar, LongPress } from '../../components';
 import { AfterInteractions } from '../../components/common';
 import { APARTMENT_EDIT_SCREEN } from '../../constants/navigation';
 import { getApartment } from '../../store/slices/apartment';
+import { deleteApartment } from '../../store/slices/apartment/delete';
+import { reloadApartment } from '../../store/slices/apartment/get';
 
 function ApartmentScreen(props) {
   const navigation = useNavigation();
@@ -38,8 +40,25 @@ function ApartmentScreen(props) {
     setApartments(data);
   };
 
-  const handleDelete = a => () => {
-    alert('delete ' + a.name);
+  const handleDelete = item => () => {
+
+    const index = building.findIndex(el => el.buildingId === item.buildingId)
+    if (index === -1) {
+      return alert("Có lỗi xảy ra không tìm thấy tòa nhà này")
+    }
+    const deleteApartmentAction = deleteApartment({ buildingId: item.buildingId })
+    dispatch(deleteApartmentAction).unwrap()
+      .then(res => {
+        console.log(res);
+        alert(`Đã xóa tòa nhà: ${item.name}`)
+        dispatch(reloadApartment({
+          type: "remove", index
+        }))
+      }
+      ).catch(err => {
+        alert(`Lỗi xóa tòa nhà: ${item.name}`)
+      })
+
   };
 
   const handleEdit = a => () => {
