@@ -22,6 +22,7 @@ import {
   SearchScreen,
 } from '../../screens/search';
 import HomeNavigator from './HomeNavigator';
+import NearbyNavigator from './NearbyNavigator';
 
 const Stack = createStackNavigator();
 
@@ -35,7 +36,7 @@ export default React.memo(() => {
       <Stack.Screen name={LOGIN} component={LoginScreen} />
       <Stack.Screen name={POST_EDIT} component={PostEditScreen} />
       <Stack.Screen name={POST_DETAILS} component={PostDetailsScreen} />
-      <Stack.Screen name={NEARBY} component={NearbyScreen} />
+      <Stack.Screen name={NEARBY} component={NearbyNavigator} />
       <Stack.Screen name={POSTED} component={PostedScreen} />
     </Stack.Navigator>
   );

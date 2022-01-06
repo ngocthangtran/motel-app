@@ -3,8 +3,10 @@ import React from 'react';
 import {
   APARTMENT_EDIT_SCREEN,
   CONTRACT,
+  CONTRACT_EDIT_SCREEN,
   MAIN,
   ROOM_EDIT_SCREEN,
+  ROOM_TENANTS_SCREEN,
   SERVICES,
   SERVICE_EDIT_SCREEN,
   TENANT,
@@ -12,8 +14,10 @@ import {
 } from '../../constants/navigation';
 import {
   ApartmentEditScreen,
+  ContractEditScreen,
   ContractScreen,
   RoomEditScreen,
+  RoomTenantsScreen,
   ServicesScreen,
   TenantEditScreen,
   TenantsScreen,
@@ -38,6 +42,8 @@ export default React.memo(() => {
       <Stack.Screen name={TENANT} component={TenantsScreen} />
       <Stack.Screen name={TENANT_EDIT} component={TenantEditScreen} />
       <Stack.Screen name={CONTRACT} component={ContractScreen} />
+      <Stack.Screen name={ROOM_TENANTS_SCREEN} component={RoomTenantsScreen} />
+      <Stack.Screen name={CONTRACT_EDIT_SCREEN} component={ContractEditScreen} />
     </Stack.Navigator>
   );
 });

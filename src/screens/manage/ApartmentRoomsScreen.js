@@ -4,7 +4,7 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RoomItem } from '../../components';
 import { FAB } from '../../components/common';
-import { ROOM_EDIT_SCREEN, TENANT } from '../../constants/navigation';
+import { ROOM_EDIT_SCREEN, ROOM_TENANTS_SCREEN, TENANT } from '../../constants/navigation';
 import ApartmentContext from '../../context/ApartmentContext';
 import { getRooms } from '../../store/slices/roomSlice';
 
@@ -19,7 +19,7 @@ function ApartmentRoomsScreen(props) {
 
   const handleFabPress = () => navigation.navigate(ROOM_EDIT_SCREEN, apartment);
   const handleItemPress = room => () => {
-    navigation.navigate(TENANT, room);
+    navigation.navigate(ROOM_TENANTS_SCREEN, room);
   };
   return (
     <View style={styles.container}>
