@@ -13,6 +13,7 @@ import serviceReducer from './slices/serviceSlice';
 import apartmentReducer from './slices/apartment';
 import roomReducer from './slices/roomSlice';
 import tenantReducer from './slices/tenantSlice';
+import contractReduce from './slices/contractSlide';
 
 export const store = configureStore({
   reducer: {
@@ -31,5 +32,6 @@ export const store = configureStore({
     apartment: apartmentReducer,
     room: roomReducer,
     tenant: tenantReducer,
+    contract: contractReduce
   },
 });

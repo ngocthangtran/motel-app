@@ -18,7 +18,7 @@ const deleteApartmentSlide = createSlice({
         },
         [deleteApartment.rejected]: (state, action) => {
             state.loading = false
-            state.error = action.payload;
+            state.error = action.error;
         },
         [deleteApartment.fulfilled]: state => {
             state.loading = false;

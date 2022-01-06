@@ -17,3 +17,6 @@ export const editContract = contract => {
 export const deleteContract = contract => {
   return apiClient.delete(`${endpoint}/delete/${contract.contractId}`);
 };
+export const getContractDetail = contract => {
+  return apiClient.get(`${endpoint}/${contract.contractId}`);
+}
