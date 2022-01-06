@@ -4,6 +4,7 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import { List } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { POST_DETAILS } from '../../constants/navigation';
+import { vndFormatter } from '../../utils/common';
 
 function NearbyListScreen(props) {
   const { posts, loading, error } = useSelector(state => state.nearby);
@@ -22,7 +23,7 @@ function NearbyListScreen(props) {
           return (
             <List.Item
               title={item.title}
-              description={item.price}
+              description={vndFormatter(item.price)}
               left={props => <List.Icon {...props} icon='map-marker' />}
               onPress={handleMotelPress(item)}
             />
