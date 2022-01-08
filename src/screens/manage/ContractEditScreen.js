@@ -2,7 +2,13 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Surface } from 'react-native-paper';
 import { AppBar } from '../../components';
-import { Form, FormMaskedInput, FormSubmitButton, FormTextInput } from '../../components/form';
+import {
+  Form,
+  FormDateTimePicker,
+  FormMaskedInput,
+  FormSubmitButton,
+  FormTextInput,
+} from '../../components/form';
 
 function ContractEditScreen(props) {
   return (
@@ -12,6 +18,8 @@ function ContractEditScreen(props) {
         <Form>
           <FormMaskedInput name='name' label='Giá thuê phòng' />
           <FormMaskedInput name='deposit' label='Tiền cọc' />
+          <FormDateTimePicker name='startAt' label='Ngày bắt đầu' mode='date' />
+          <FormMaskedInput label='Chu kỳ thanh toán' unit='Tháng' />
           <FormSubmitButton title='Tạo hợp đồng' />
         </Form>
       </Surface>

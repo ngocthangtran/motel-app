@@ -41,28 +41,24 @@ function ApartmentScreen(props) {
   };
 
   const handleDelete = item => () => {
-
-    const index = building.findIndex(el => el.buildingId === item.buildingId)
+    const index = building.findIndex(el => el.buildingId === item.buildingId);
     if (index === -1) {
-      return alert("Có lỗi xảy ra không tìm thấy tòa nhà này")
+      return alert('Có lỗi xảy ra không tìm thấy tòa nhà này');
     }
-    const deleteApartmentAction = deleteApartment({ buildingId: item.buildingId })
-    try {
-      dispatch(deleteApartmentAction).unwrap()
-        .then(res => {
-          console.log(res);
-          alert(`Đã xóa tòa nhà: ${item.name}`)
-          dispatch(reloadApartment({
-            type: "remove", index
-          }))
-        }
-        ).catch(err => {
-          alert(`Lỗi xóa tòa nhà: ${item.name}`)
-        })
-    } catch (error) {
-      console.log(err)
-    }
-
+    const deleteApartmentAction = deleteApartment({ buildingId: item.buildingId });
+    dispatch(deleteApartmentAction)
+      .unwrap()
+      .then(res => {
+        dispatch(
+          reloadApartment({
+            type: 'remove',
+            index,
+          })
+        );
+      })
+      .catch(({ error }) => {
+        alert(`Lỗi xóa tòa nhà: ${error.message}`);
+      });
   };
 
   const handleEdit = a => () => {
