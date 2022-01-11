@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { Linking, ScrollView, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import MapView, { Marker } from 'react-native-maps';
+import { AppBar } from '../../components';
 import {
-  Appbar,
   Caption,
   Divider,
   Headline,
@@ -50,10 +50,7 @@ function PostDetailsScreen(props) {
 
   return (
     <Surface style={styles.container}>
-      <Appbar.Header style={{ height: 40 }}>
-        <Appbar.BackAction onPress={handleBack} />
-        <Appbar.Content title='Chi tiết phòng' />
-      </Appbar.Header>
+      <AppBar title='Chi tiết phòng' onBack={handleBack} />
       <AfterInteractions>
         <ScrollView>
           {post?.postImages && <SliderBox images={mapToSliderImages()} sliderBoxHeight={240} />}

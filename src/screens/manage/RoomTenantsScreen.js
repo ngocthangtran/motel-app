@@ -22,6 +22,7 @@ function RoomTenantsScreen(props) {
   return (
     <View style={styles.container}>
       <AppBar title='Người thuê' />
+      <Text>{JSON.stringify(room)}</Text>
       <Surface style={styles.contentContainer}></Surface>
       <FAB onPress={handleFabPress} />
     </View>

@@ -37,7 +37,7 @@ function FormUtilsPicker({ name, label, items = [] }) {
     return (
       <List.Item
         onPress={index === -1 ? handleAdd(item) : handleRemove(item)}
-        left={props => <List.Icon {...props} icon={item.icon} />}
+        left={props => <List.Icon {...props} icon={item.icon || 'toolbox-outline'} />}
         right={props =>
           index !== -1 ? <List.Icon {...props} icon='check-circle-outline' /> : null
         }
@@ -58,7 +58,7 @@ function FormUtilsPicker({ name, label, items = [] }) {
               {value.map(u => {
                 return (
                   <TouchableOpacity style={styles.item} key={u.serviceId} onPress={handleRemove(u)}>
-                    <MaterialCommunityIcons name={u.icon} size={28} />
+                    <MaterialCommunityIcons name={u.icon || 'toolbox-outline'} size={28} />
                     <MaterialCommunityIcons name='close' style={styles.closeIcon} />
                   </TouchableOpacity>
                 );
