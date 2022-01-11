@@ -10,7 +10,8 @@ import {
 
 const createService = createAsyncThunk('service/create', async params => {
   const { service } = params;
-  await createServiceAPI(service);
+  const newService = await createServiceAPI(service);
+  return newService;
 });
 
 const getServices = createAsyncThunk('service/getServices', async () => {
@@ -47,6 +48,7 @@ const serviceSlice = createSlice({
     builder.addCase(createService.fulfilled, (state, action) => {
       state.loading = false;
       state.error = '';
+      state.services.push(action.payload);
     });
 
     builder.addCase(createService.rejected, (state, action) => {

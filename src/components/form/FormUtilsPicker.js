@@ -167,6 +167,9 @@ const styles = StyleSheet.create({
     padding: 18,
     justifyContent: 'center',
     alignItems: 'center',
+    borderTopColor: '#ddd',
+    borderTopWidth: 0.5,
+    borderStyle: 'dotted',
   },
 });
 
