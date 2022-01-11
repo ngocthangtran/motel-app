@@ -1,13 +1,21 @@
 import React, { useRef } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { FlatList, Modal, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  FlatList,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Divider, IconButton, Surface, List } from 'react-native-paper';
 import FormFieldWrapper from './FormFieldWrapper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import useDisclosure from '../../hooks/useDisclosure';
 import { vndFormatter } from '../../utils/common';
 
-function FormUtilsPicker({ name, label, items = [] }) {
+function FormUtilsPicker({ name, label, items = [], onAdd }) {
   const {
     control,
     formState: { errors },
@@ -42,9 +50,16 @@ function FormUtilsPicker({ name, label, items = [] }) {
           index !== -1 ? <List.Icon {...props} icon='check-circle-outline' /> : null
         }
         title={item.name}
-        description={`${vndFormatter(item.price)} / ${item.unit} `}
+        description={`${
+          item.price == 0 ? 'Miễn phí' : vndFormatter(item.price) + ' / ' + item.unit
+        }`}
       />
     );
+  };
+
+  const handleAddNew = () => {
+    onClose();
+    onAdd();
   };
 
   return (
@@ -82,6 +97,11 @@ function FormUtilsPicker({ name, label, items = [] }) {
                     keyExtractor={item => item.serviceId}
                     renderItem={renderUtilItem}
                   />
+                  {onAdd && (
+                    <TouchableOpacity style={styles.addButton} onPress={handleAddNew}>
+                      <Text> + </Text>
+                    </TouchableOpacity>
+                  )}
                 </Surface>
               </TouchableOpacity>
             </Modal>
@@ -142,6 +162,11 @@ const styles = StyleSheet.create({
     top: 6,
     right: 6,
     elevation: 1,
+  },
+  addButton: {
+    padding: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

@@ -19,9 +19,10 @@ function RoomTenantsScreen(props) {
       ]);
     }
   };
+  const handleBack = () => navigation.goBack();
   return (
     <View style={styles.container}>
-      <AppBar title='Người thuê' />
+      <AppBar title='Người thuê' onBack={handleBack} />
       <Text>{JSON.stringify(room)}</Text>
       <Surface style={styles.contentContainer}></Surface>
       <FAB onPress={handleFabPress} />

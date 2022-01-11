@@ -2,11 +2,11 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Appbar, useTheme } from 'react-native-paper';
 
-function AppBar({ title, onBack }) {
+function AppBar({ title, backButtonVisible = true, onBack }) {
   const { colors } = useTheme();
   return (
     <Appbar.Header style={{ height: 40, backgroundColor: colors.surface }}>
-      <Appbar.BackAction onPress={onBack} />
+      {backButtonVisible && <Appbar.BackAction onPress={onBack} />}
       <Appbar.Content title={title} />
     </Appbar.Header>
   );

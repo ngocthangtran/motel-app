@@ -20,6 +20,7 @@ import { apartmentCreateMapper } from '../../utils/mappers';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { reloadApartment } from '../../store/slices/apartment/get';
 import { useNavigation } from '@react-navigation/native';
+import { SERVICE_EDIT_SCREEN } from '../../constants/navigation';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(6).required(),
@@ -59,6 +60,7 @@ function ApartmentEditScreen(props) {
   };
 
   const handleBack = () => navigation.goBack();
+  const handleAddUtil = () => navigation.navigate(SERVICE_EDIT_SCREEN);
 
   return (
     <Surface style={styles.container}>
@@ -79,7 +81,12 @@ function ApartmentEditScreen(props) {
             <Gap />
             <FormDateTimePicker required name='closeTime' label='Giờ đóng cửa' />
           </FormRow>
-          <FormUtilsPicker name='services' label='Tiện ích tòa' items={apartmentServices} />
+          <FormUtilsPicker
+            onAdd={handleAddUtil}
+            name='services'
+            label='Tiện ích tòa'
+            items={apartmentServices}
+          />
           <FormSubmitButton title='Tạo tòa nhà' onSubmit={handleSubmit} loading={loading} />
         </Form>
       </View>

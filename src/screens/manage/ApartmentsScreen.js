@@ -65,9 +65,11 @@ function ApartmentScreen(props) {
     alert('edit ' + a.name);
   };
 
+  const handleBack = () => navigation.goBack();
+
   return (
     <Surface style={styles.container}>
-      <AppBar title='Tòa nhà' />
+      <AppBar title='Tòa nhà' onBack={handleBack} backButtonVisible={false} />
       <Surface style={styles.contentContainer}>
         <AfterInteractions>
           <Searchbar

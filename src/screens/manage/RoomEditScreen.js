@@ -1,4 +1,4 @@
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
@@ -20,13 +20,12 @@ import { getApartmentServices } from '../../store/slices/serviceSlice';
 import * as Yup from 'yup';
 import roomCreateMapper from '../../utils/mappers/roomCreateMapper';
 import { createRoom, reloadRoom } from '../../store/slices/roomSlice';
-import { unwrapResult } from '@reduxjs/toolkit';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(1).required(),
   area: Yup.string().min(1).required(),
   deposit: Yup.string().min(0),
-  price: Yup.string().min(1).required(),
+  // price: Yup.string().min(1).required(),
 });
 
 function RoomEditScreen(props) {
@@ -34,6 +33,7 @@ function RoomEditScreen(props) {
   const dispatch = useDispatch();
   const { apServices } = useSelector(state => state.service);
   const { loading, error } = useSelector(state => state.room);
+  const navigation = useNavigation();
 
   useEffect(() => {
     dispatch(getApartmentServices({ apartmentId: route.params.buildingId }));
@@ -41,8 +41,9 @@ function RoomEditScreen(props) {
 
   const handleSubmit = async values => {
     const room = roomCreateMapper(values, route.params.buildingId);
-    dispatch(createRoom({ room })).unwrap()
-      .then((res) => {
+    dispatch(createRoom({ room }))
+      .unwrap()
+      .then(res => {
         const loadRoomAction = reloadRoom({
           type: 'add',
           data: {
@@ -50,20 +51,23 @@ function RoomEditScreen(props) {
             name: res.name,
             contractCount: 0,
             renterCount: 0,
-            price: "Chưa định giá",
-            status: "Chưa thuê"
-          }
-        })
-        dispatch(loadRoomAction)
-        alert("Tạo thành công");
+            price: 'Chưa định giá',
+            status: 'Chưa thuê',
+          },
+        });
+        dispatch(loadRoomAction);
+        alert('Tạo thành công');
       })
-      .catch((err) => {
+      .catch(err => {
         alert('Cannot create room');
       });
   };
+
+  const handleBack = () => navigation.goBack();
+
   return (
     <View style={styles.container}>
-      <AppBar title={'Thêm phòng'} />
+      <AppBar title={'Thêm phòng'} onBack={handleBack} />
       <Surface style={styles.contentContainer}>
         <AfterInteractions>
           <Form validationSchema={validationSchema}>
@@ -72,13 +76,13 @@ function RoomEditScreen(props) {
             <FormPicker label='Loại' name='roomType' items={ROOM_TYPES} placeholder='Chọn loại' />
             <FormMaskedInput required name='area' label='Diện tích' placeholder='20' unit='m²' />
             <FormMaskedInput name='deposit' label='Tiền cọc' placeholder='20' unit='Vnđ' />
-            <FormMaskedInput
+            {/* <FormMaskedInput
               required
               name='price'
               label='Giá thuê phòng'
               placeholder='20'
               unit='Vnđ'
-            />
+            /> */}
             <FormUtilsPicker name='utils' items={apServices} label='Dịch vụ phòng' />
             {/* <FormImagePicker name='images' label='Ảnh phòng' /> */}
             <FormSubmitButton title={'Tạo phòng'} onSubmit={handleSubmit} loading={loading} />

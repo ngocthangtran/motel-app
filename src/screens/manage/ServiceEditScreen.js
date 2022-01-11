@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 import { createService, updateService } from '../../store/slices/serviceSlice';
 import { unMask } from 'react-native-mask-text';
 import PickerServiceIcon from '../../components/PickerServiceIcon';
-import { useRoute } from '@react-navigation/core';
+import { useRoute, useNavigation } from '@react-navigation/core';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(2).required(),
@@ -35,6 +35,7 @@ function ServiceEditScreen(props) {
   const dispatch = useDispatch();
   const { loading, error } = useSelector(state => state.service);
   const { params: item } = useRoute();
+  const navigation = useNavigation();
 
   const RenderUnitInput = () => {
     const {
@@ -73,9 +74,11 @@ function ServiceEditScreen(props) {
     }
   };
 
+  const handleBack = () => navigation.goBack();
+
   return (
     <Surface style={styles.container}>
-      <AppBar title='Thêm dịch vụ' />
+      <AppBar title='Thêm dịch vụ' onBack={handleBack} />
       <Surface style={styles.contentContainer}>
         <Form validationSchema={validationSchema}>
           <FormTextInput

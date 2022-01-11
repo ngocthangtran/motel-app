@@ -21,9 +21,11 @@ function ServiceScreen(props) {
   const handleServiceItemPress = item => () => navigation.navigate(SERVICE_EDIT_SCREEN, item);
   const fetchServices = () => dispatch(getServices());
 
+  const handleBack = () => navigation.goBack();
+
   return (
     <Surface style={styles.container}>
-      <AppBar title='Dịch vụ' />
+      <AppBar title='Dịch vụ' onBack={handleBack} />
       <Surface style={styles.contentContainer}>
         <Searchbar placeholder='Tìm dịch vụ' style={styles.searchBar} />
         <SectionWrapper title='Dịch vụ có phí'>
