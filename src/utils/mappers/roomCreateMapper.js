@@ -6,7 +6,7 @@ export default (room, buildingId) => {
     buildingId,
     area: unMask(room.area),
     deposit: unMask(room.deposit),
-    // price: unMask(room.price),
+    price: unMask(room.price),
     roomTypeId: room.roomType.roomTypeId,
   };
 };

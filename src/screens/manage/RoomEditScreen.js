@@ -25,7 +25,7 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().min(1).required(),
   area: Yup.string().min(1).required(),
   deposit: Yup.string().min(0),
-  // price: Yup.string().min(1).required(),
+  price: Yup.string().min(1).required(),
 });
 
 function RoomEditScreen(props) {
@@ -76,13 +76,13 @@ function RoomEditScreen(props) {
             <FormPicker label='Loại' name='roomType' items={ROOM_TYPES} placeholder='Chọn loại' />
             <FormMaskedInput required name='area' label='Diện tích' placeholder='20' unit='m²' />
             <FormMaskedInput name='deposit' label='Tiền cọc' placeholder='20' unit='Vnđ' />
-            {/* <FormMaskedInput
+            <FormMaskedInput
               required
               name='price'
               label='Giá thuê phòng'
               placeholder='20'
               unit='Vnđ'
-            /> */}
+            />
             <FormUtilsPicker name='utils' items={apServices} label='Dịch vụ phòng' />
             {/* <FormImagePicker name='images' label='Ảnh phòng' /> */}
             <FormSubmitButton title={'Tạo phòng'} onSubmit={handleSubmit} loading={loading} />

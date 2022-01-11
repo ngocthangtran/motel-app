@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Surface, Text, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { vndFormatter } from '../utils/common';
 
 function RoomItem({ name = '', price = '', onPress }) {
   const { colors } = useTheme();
@@ -18,7 +19,7 @@ function RoomItem({ name = '', price = '', onPress }) {
           {name}
         </Text>
         <Text style={styles.address} numberOfLines={2}>
-          {price}
+          {vndFormatter(price)}
         </Text>
       </Surface>
     </TouchableWithoutFeedback>
