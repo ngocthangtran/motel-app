@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, FlatList, Pressable } from 'react-native';
-import { FAB, Searchbar, Surface } from 'react-native-paper';
+import { Searchbar, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApartmentItem, AppBar, LongPress } from '../../components';
-import { AfterInteractions } from '../../components/common';
+import { AfterInteractions, FAB } from '../../components/common';
 import { APARTMENT_EDIT_SCREEN } from '../../constants/navigation';
 import { getApartment } from '../../store/slices/apartment';
 import { deleteApartment } from '../../store/slices/apartment/delete';
@@ -95,7 +95,7 @@ function ApartmentScreen(props) {
           />
         </AfterInteractions>
       </Surface>
-      <FAB icon='plus' style={styles.fab} onPress={handleFabPress} />
+      <FAB onPress={handleFabPress} />
     </Surface>
   );
 }

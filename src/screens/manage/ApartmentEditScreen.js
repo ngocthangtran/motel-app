@@ -19,6 +19,7 @@ import { createApartment } from '../../store/slices/apartment';
 import { apartmentCreateMapper } from '../../utils/mappers';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { reloadApartment } from '../../store/slices/apartment/get';
+import { useNavigation } from '@react-navigation/native';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(6).required(),
@@ -31,6 +32,7 @@ const validationSchema = Yup.object().shape({
 
 function ApartmentEditScreen(props) {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const { services: apartmentServices } = useSelector(state => state.service);
   const { loading } = useSelector(state => state.apartment.create);
   useEffect(() => {
@@ -39,26 +41,28 @@ function ApartmentEditScreen(props) {
 
   const handleSubmit = async values => {
     const apartment = apartmentCreateMapper(values);
-    const dispatchAction = await dispatch(createApartment({ apartment }))
+    const dispatchAction = await dispatch(createApartment({ apartment }));
     const result = await unwrapResult(dispatchAction);
     if (result.building) {
       const data = {
         buildingId: result.building.buildingId,
         name: result.building.name,
-        address: result.building.address
-      }
+        address: result.building.address,
+      };
       const uploadBdAction = reloadApartment({
-        type: "add",
-        data
+        type: 'add',
+        data,
       });
       dispatch(uploadBdAction);
-      return
+      return;
     }
   };
 
+  const handleBack = () => navigation.goBack();
+
   return (
     <Surface style={styles.container}>
-      <AppBar title='Thêm tòa nhà' />
+      <AppBar title='Thêm tòa nhà' onBack={handleBack} />
       <View style={styles.contentContainer}>
         {/* <Form> */}
         <Form validationSchema={validationSchema}>
@@ -73,7 +77,7 @@ function ApartmentEditScreen(props) {
           <FormRow>
             <FormDateTimePicker name='openTime' label='Giờ mở cửa' />
             <Gap />
-            <FormDateTimePicker required name='closeTime' label='Giờ mở cửa' />
+            <FormDateTimePicker required name='closeTime' label='Giờ đóng cửa' />
           </FormRow>
           <FormUtilsPicker name='services' label='Tiện ích tòa' items={apartmentServices} />
           <FormSubmitButton title='Tạo tòa nhà' onSubmit={handleSubmit} loading={loading} />
