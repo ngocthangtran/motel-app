@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 function Picker({
   items,
   placeholder,
-  selectedItem,
+  selectedItem = [],
   PickerItemComponent,
   numColumns = 1,
   onItemSelect,
@@ -17,6 +17,7 @@ function Picker({
   const [isVisible, onOpen, onClose] = useDisclosure();
 
   const handleItemPress = item => () => {
+    alert('ok');
     onClose();
     onItemSelect(item);
   };
@@ -53,7 +54,11 @@ function Picker({
               numColumns={numColumns}
               renderItem={({ item }) =>
                 PickerItemComponent ? (
-                  <PickerItemComponent item={item} onPress={handleItemPress(item)} />
+                  <PickerItemComponent
+                    item={item}
+                    selected={selectedItem.includes(item)}
+                    onPress={handleItemPress(item)}
+                  />
                 ) : (
                   <List.Item title={item.name || item} onPress={handleItemPress(item)} />
                 )

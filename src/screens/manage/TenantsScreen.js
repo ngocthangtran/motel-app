@@ -14,13 +14,13 @@ function TenantScreen(props) {
   const dispatch = useDispatch();
   const handleCreatePress = () => navigation.navigate(TENANT_EDIT);
   const { tenants: renters, loading } = useSelector(state => state.tenant);
-  const [tenants, setTenats] = useState([]);
+  const [tenants, setTenants] = useState([]);
 
   useEffect(() => {
     dispatch(getTenants());
   }, []);
   useEffect(() => {
-    setTenats(renters);
+    setTenants(renters);
   }, [renters]);
 
   const handleDeleteTenant =
@@ -50,7 +50,7 @@ function TenantScreen(props) {
         data.push(element);
       }
     });
-    setTenats(data);
+    setTenants(data);
   };
   return (
     <View style={styles.container}>

@@ -17,3 +17,7 @@ export const editTenant = tenant => {
 export const deleteTenant = tenantId => {
   return apiClient.delete(`${endpoint}/delete/${tenantId}`);
 };
+
+export const fetchNoContract = () => {
+  return apiClient.get(`${endpoint}/nocontracts`);
+};

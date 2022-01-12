@@ -12,7 +12,7 @@ function FormMaskedInput({
   unit,
   placeholder,
   required,
-  defaultValue,
+  defaultValue = 0,
   mask = '999 999',
 }) {
   const {
@@ -40,7 +40,8 @@ function FormMaskedInput({
           //   render={props => (
           <Surface style={styles.inputContainer}>
             <MaskedTextInput
-              defaultValue={value}
+              defaultValue={defaultValue + ''}
+              value={value + ''}
               placeholder={placeholder}
               onChangeText={onChange}
               keyboardType='numeric'

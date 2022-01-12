@@ -7,10 +7,11 @@ import { FAB } from '../../components/common';
 import { CONTRACT, CONTRACT_EDIT_SCREEN } from '../../constants/navigation';
 
 function RoomTenantsScreen(props) {
-  const { params: room } = useRoute();
+  const { room, apartmentId } = useRoute().params;
   const navigation = useNavigation();
 
-  const handleCreateContract = () => navigation.navigate(CONTRACT_EDIT_SCREEN, room);
+  const handleCreateContract = () =>
+    navigation.navigate(CONTRACT_EDIT_SCREEN, { room, apartmentId });
   const handleFabPress = () => {
     if (room.contractCount === 0) {
       Alert.alert('Chưa có hợp đòng', 'Phòng chưa có hợp đồng, tạo hợp đồng ngay?', [
@@ -24,6 +25,7 @@ function RoomTenantsScreen(props) {
     <View style={styles.container}>
       <AppBar title='Người thuê' onBack={handleBack} />
       <Text>{JSON.stringify(room)}</Text>
+      <Text>{JSON.stringify(apartmentId)}</Text>
       <Surface style={styles.contentContainer}></Surface>
       <FAB onPress={handleFabPress} />
     </View>

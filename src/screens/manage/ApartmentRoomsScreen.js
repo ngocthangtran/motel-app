@@ -19,7 +19,7 @@ function ApartmentRoomsScreen(props) {
 
   const handleFabPress = () => navigation.navigate(ROOM_EDIT_SCREEN, apartment);
   const handleItemPress = room => () => {
-    navigation.navigate(ROOM_TENANTS_SCREEN, room);
+    navigation.navigate(ROOM_TENANTS_SCREEN, { room, apartmentId: apartment.buildingId });
   };
   return (
     <View style={styles.container}>
