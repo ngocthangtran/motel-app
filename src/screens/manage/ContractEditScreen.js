@@ -12,8 +12,10 @@ import {
   FormSubmitButton,
   FormUtilsPicker,
 } from '../../components/form';
+import { createContractAction } from '../../store/slices/contractSlide';
 import { getApartmentServices } from '../../store/slices/serviceSlice';
 import { getNoContractTenants } from '../../store/slices/tenantSlice';
+import { contractCreateMapper } from '../../utils/mappers';
 
 function ContractEditScreen(props) {
   const { room, apartmentId } = useRoute().params;
@@ -28,14 +30,25 @@ function ContractEditScreen(props) {
     dispatch(getNoContractTenants());
   }, []);
 
-  const handleSubmit = values => console.log(values);
+  const handleSubmit = values => {
+    const contract = contractCreateMapper(values, room.roomId);
+    console.log(contract);
+    dispatch(createContractAction(contract))
+      .unwrap()
+      .then(() => {
+        alert('ok');
+      })
+      .catch(() => {
+        alert('err');
+      });
+  };
   const handleBack = () => navigation.goBack();
   return (
     <View style={styles.container}>
       <AppBar title='Tạo hợp đồng' onBack={handleBack} />
       <Surface style={styles.contentContainer}>
         <Form>
-          <FormMaskedInput defaultValue={room.price} name='name' label='Giá thuê phòng' />
+          <FormMaskedInput defaultValue={room.price} name='price' label='Giá thuê phòng' />
           <FormMaskedInput defaultValue={room.deposit} name='deposit' label='Tiền cọc' />
           <FormDateTimePicker name='startAt' label='Ngày bắt đầu' mode='date' />
           <FormMaskedInput
