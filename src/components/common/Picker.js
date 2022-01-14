@@ -17,7 +17,6 @@ function Picker({
   const [isVisible, onOpen, onClose] = useDisclosure();
 
   const handleItemPress = item => () => {
-    alert('ok');
     onClose();
     onItemSelect(item);
   };
@@ -56,7 +55,7 @@ function Picker({
                 PickerItemComponent ? (
                   <PickerItemComponent
                     item={item}
-                    selected={selectedItem.includes(item)}
+                    // selected={selectedItem.includes(item)}
                     onPress={handleItemPress(item)}
                   />
                 ) : (

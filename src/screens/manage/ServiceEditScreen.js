@@ -111,6 +111,7 @@ function ServiceEditScreen(props) {
             placeholder='Chọn icon'
             items={SERVICE_ICONS}
             defaultValue={item ? item.icon : null}
+            // defaultValue={[]}
             PickerItemComponent={PickerServiceIcon}
             numColumns={3}
           />
