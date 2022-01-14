@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { List, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +30,31 @@ function ContractEditScreen(props) {
     dispatch(getApartmentServices({ apartmentId }));
     dispatch(getNoContractTenants());
   }, []);
+
+  const RenderServiceStartValues = () => {
+    const {
+      formState: { dirtyFields, isDirty },
+    } = useFormContext();
+    const services = useWatch({ name: 'services' });
+    if (Array.isArray(services))
+      return (
+        <>
+          {services.map(s => {
+            if (s.fee_base_ons_id === '8b0871c8-5f03-4507-997f-c2008e67937d')
+              return (
+                <FormMaskedInput
+                  key={s.serviceId}
+                  name={`${s.serviceId}_startValue`}
+                  defaultValue='1'
+                  label={`Chỉ số ${s.name} bắt đầu`}
+                  unit={s.unit}
+                />
+              );
+          })}
+        </>
+      );
+    return null;
+  };
 
   const handleSubmit = values => {
     const contract = contractCreateMapper(values, room.roomId);
@@ -80,7 +106,13 @@ function ContractEditScreen(props) {
               );
             }}
           />
-          <FormUtilsPicker items={apServices} name='services' label='Dịch vụ phòng' />
+          <FormUtilsPicker
+            items={apServices}
+            defaultValue={[]}
+            name='services'
+            label='Dịch vụ phòng'
+          />
+          <RenderServiceStartValues />
           <FormSubmitButton title='Tạo hợp đồng' onSubmit={handleSubmit} />
         </Form>
       </Surface>

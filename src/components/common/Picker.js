@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 function Picker({
   items,
   placeholder,
-  selectedItem = [],
+  selectedItem,
   PickerItemComponent,
   numColumns = 1,
   onItemSelect,

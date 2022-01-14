@@ -28,8 +28,8 @@ function FormUtilsPicker({ name, label, items = [], onAdd }) {
 
   const handleAdd = item => () => {
     const values = getValues(name);
-    const { serviceId, icon, name: sName } = item;
-    setValue(name, [...values, { serviceId, icon, name: sName }]);
+    const { serviceId, icon, name: sName, fee_base_ons_id, unit } = item;
+    setValue(name, [...values, { serviceId, icon, unit, name: sName, fee_base_ons_id }]);
     onClose();
     scrollRef.current.scrollToEnd();
   };
