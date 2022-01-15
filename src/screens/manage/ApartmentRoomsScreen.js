@@ -21,10 +21,12 @@ function ApartmentRoomsScreen(props) {
   const handleItemPress = room => () => {
     navigation.navigate(ROOM_TENANTS_SCREEN, { room, apartmentId: apartment.buildingId });
   };
+  const handleRefresh = () => dispatch(getRooms(apartment.buildingId));
   return (
     <View style={styles.container}>
       <FlatList
         refreshing={loading}
+        onRefresh={handleRefresh}
         data={rooms}
         keyExtractor={item => item.roomId}
         numColumns={2}

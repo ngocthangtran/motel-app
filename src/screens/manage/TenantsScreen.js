@@ -23,6 +23,8 @@ function TenantScreen(props) {
     setTenants(renters);
   }, [renters]);
 
+  const handleRefresh = () => dispatch(getTenants());
+
   const handleDeleteTenant =
     ({ renterId }) =>
     () => {
@@ -52,9 +54,11 @@ function TenantScreen(props) {
     });
     setTenants(data);
   };
+
+  const handleBack = () => navigation.goBack();
   return (
     <View style={styles.container}>
-      <AppBar title='Người thuê' />
+      <AppBar title='Người thuê' onBack={handleBack} />
       <Surface style={styles.contentContainer}>
         <Searchbar
           placeholder='Tìm người thuê'
@@ -62,6 +66,8 @@ function TenantScreen(props) {
           onChangeText={onChangeText}
         />
         <FlatList
+          refreshing={loading}
+          onRefresh={handleRefresh}
           data={tenants}
           keyExtractor={item => item.renterId}
           renderItem={({ item }) => {

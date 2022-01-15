@@ -19,7 +19,7 @@ import { createApartment } from '../../store/slices/apartment';
 import { apartmentCreateMapper } from '../../utils/mappers';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { reloadApartment } from '../../store/slices/apartment/get';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { SERVICE_EDIT_SCREEN } from '../../constants/navigation';
 
 const validationSchema = Yup.object().shape({
@@ -33,6 +33,7 @@ const validationSchema = Yup.object().shape({
 
 function ApartmentEditScreen(props) {
   const dispatch = useDispatch();
+  const apartment = useRoute().params;
   const navigation = useNavigation();
   const { services: apartmentServices } = useSelector(state => state.service);
   const { loading } = useSelector(state => state.apartment.create);
@@ -68,7 +69,12 @@ function ApartmentEditScreen(props) {
       <View style={styles.contentContainer}>
         {/* <Form> */}
         <Form validationSchema={validationSchema}>
-          <FormTextInput name='name' label='Tên tòa nhà' placeholder='Nhập tên tòa nhà' />
+          <FormTextInput
+            name='name'
+            defaultValue={apartment.name || ''}
+            label='Tên tòa nhà'
+            placeholder='Nhập tên tòa nhà'
+          />
           <FormAddressPicker />
           <FormTextInput
             required

@@ -28,6 +28,7 @@ function ServiceScreen(props) {
       <AppBar title='Dịch vụ' onBack={handleBack} />
       <Surface style={styles.contentContainer}>
         <Searchbar placeholder='Tìm dịch vụ' style={styles.searchBar} />
+        {loading && <ActivityIndicator animating color='coral' />}
         <SectionWrapper title='Dịch vụ có phí'>
           <FlatList
             data={services.filter(s => +s.price != 0)}
@@ -61,7 +62,6 @@ function ServiceScreen(props) {
             )}
           />
         </SectionWrapper>
-        <Text>{JSON.stringify(error)}</Text>
       </Surface>
       <FAB icon='plus' style={styles.fab} onPress={handleFabPress} />
     </Surface>

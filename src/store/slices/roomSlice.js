@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createRoom as createRoomAPI, fetchRooms } from '../../api/room';
+import { createRoom as createRoomAPI, fetchRooms, fetchRoomTenants } from '../../api/room';
 
 const getRooms = createAsyncThunk('room/get', async apartmentId => {
   const data = await fetchRooms(apartmentId);
@@ -10,19 +10,24 @@ const createRoom = createAsyncThunk('room/create', async ({ room }) => {
   return await createRoomAPI(room);
 });
 
+const getRoomTenants = createAsyncThunk('/room/tenants', async roomId => {
+  return await fetchRoomTenants(roomId);
+});
+
 const roomSlice = createSlice({
   name: 'room',
   initialState: {
     rooms: [],
     loading: false,
     error: '',
+    tenants: [],
   },
   reducers: {
     reloadRoom: (state, action) => {
       if (action.payload.type === 'add') {
         state.rooms.push(action.payload.data);
       }
-    }
+    },
   },
   extraReducers: builder => {
     builder.addCase(getRooms.pending, (state, action) => {
@@ -53,9 +58,23 @@ const roomSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+
+    builder.addCase(getRoomTenants.pending, (state, action) => {
+      state.loading = true;
+      state.error = '';
+    });
+    builder.addCase(getRoomTenants.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = '';
+      state.tenants = action.payload;
+    });
+    builder.addCase(getRoomTenants.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
 
-export { getRooms, createRoom };
-export const { reloadRoom } = roomSlice.actions
+export { getRooms, createRoom, getRoomTenants };
+export const { reloadRoom } = roomSlice.actions;
 export default roomSlice.reducer;

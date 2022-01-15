@@ -23,7 +23,10 @@ function ApartmentScreen(props) {
   useEffect(() => {
     setApartments(building);
   }, [building]);
+
   const handleFabPress = () => navigation.navigate(APARTMENT_EDIT_SCREEN);
+
+  const handleRefresh = () => dispatch(getApartment());
 
   const handleApartmentPress = a => () => {
     navigation.navigate('APARTMENT', a);
@@ -62,7 +65,7 @@ function ApartmentScreen(props) {
   };
 
   const handleEdit = a => () => {
-    alert('edit ' + a.name);
+    navigation.navigate(APARTMENT_EDIT_SCREEN, a);
   };
 
   const handleBack = () => navigation.goBack();
@@ -79,6 +82,7 @@ function ApartmentScreen(props) {
           />
           <FlatList
             refreshing={loading}
+            onRefresh={handleRefresh}
             numColumns={2}
             data={apartments}
             keyExtractor={item => item.buildingId}

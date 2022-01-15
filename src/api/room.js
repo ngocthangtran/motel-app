@@ -9,3 +9,7 @@ export const fetchRooms = async apartmentId => {
 export const createRoom = async room => {
   return apiClient.post(`${endPoint}/create`, room);
 };
+
+export const fetchRoomTenants = async roomId => {
+  return apiClient.get(`${endPoint}/renter/${roomId}`);
+};

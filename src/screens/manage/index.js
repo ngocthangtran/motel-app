@@ -1,7 +1,7 @@
 export { default as ApartmentDetails } from './ApartmentDetails';
 export { default as ApartmentsScreen } from './ApartmentsScreen';
 export { default as BillingScreen } from './BillingsScreen';
-export { default as ContractScreen } from './ContractScreen';
+export { default as ContractsScreen } from './ContractsScreen';
 export { default as RoomDetailsScreen } from './RoomDetailsScreen';
 export { default as RoomsScreen } from './RoomsScreen';
 export { default as ServicesScreen } from './ServicesScreen';

@@ -25,7 +25,7 @@ const deleteContractAction = createAsyncThunk('contract/delete', async contract 
 const contractSlide = createSlice({
   name: 'contract',
   initialState: {
-    contracts: [],
+    contracts: null,
     loading: false,
     error: null,
   },
@@ -78,4 +78,4 @@ const contractSlide = createSlice({
 
 export { createContractAction, fetchContractsAction, deleteContractAction };
 export const { uploadContract } = contractSlide.actions;
-export default contractSlide;
+export default contractSlide.reducer;
