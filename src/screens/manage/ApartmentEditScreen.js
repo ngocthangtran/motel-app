@@ -67,7 +67,6 @@ function ApartmentEditScreen(props) {
     <Surface style={styles.container}>
       <AppBar title='Thêm tòa nhà' onBack={handleBack} />
       <View style={styles.contentContainer}>
-        {/* <Form> */}
         <Form validationSchema={validationSchema}>
           <FormTextInput
             name='name'
@@ -75,7 +74,7 @@ function ApartmentEditScreen(props) {
             label='Tên tòa nhà'
             placeholder='Nhập tên tòa nhà'
           />
-          <FormAddressPicker />
+          <FormAddressPicker defaultWard={apartment.wardId} />
           <FormTextInput
             required
             name='address'

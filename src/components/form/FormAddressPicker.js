@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { StyleSheet } from 'react-native';
 import { Surface } from 'react-native-paper';
@@ -8,7 +8,7 @@ import PROVINCES from '../../constants/provinces.js';
 import DISTRICTS from '../../constants/districts.json';
 import WARDS from '../../constants/wards.json';
 
-function FormAddressPicker(props) {
+function FormAddressPicker({ defaultWard }) {
   const [districts, setDistrict] = useState([]);
   const [wards, setWards] = useState([]);
 
@@ -17,6 +17,14 @@ function FormAddressPicker(props) {
     control,
     formState: { errors },
   } = useFormContext();
+
+  useEffect(() => {
+    if (!defaultWard) return;
+    const ward = WARDS.find(w => {
+      return w.wardId === defaultWard;
+    });
+    console.log(ward);
+  }, []);
 
   const handleProvinceSelect = async p => {
     setValue('province', p);

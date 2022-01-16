@@ -91,8 +91,8 @@ export const defaultTheme = {
     background: '#fff',
     // primary: 'coral',
     // accent: 'tomato',
-    primary: '#ff80ab',
-    accent: '#ff4181',
+    primary: '#2fa3c3',
+    accent: '#402b98',
   },
   fonts: configureFonts(fontConfig),
 };
