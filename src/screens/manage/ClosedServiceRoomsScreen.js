@@ -11,7 +11,7 @@ function ClosedServiceRoomsScreen(props) {
   useEffect(() => {
     if (!rooms) setData([]);
     else {
-      const d = mapToSectionListData(rooms.exitMonth);
+      const d = mapToSectionListData(rooms.exitmonth);
       setData(d);
     }
   }, [rooms]);

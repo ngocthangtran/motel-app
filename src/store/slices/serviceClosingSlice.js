@@ -7,6 +7,7 @@ import {
 
 const getServiceClosingRooms = createAsyncThunk('serviceClosing/rooms', async () => {
   const data = await fetchSVClosingRooms();
+  console.log(data);
   return data;
 });
 
