@@ -1,9 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchSVClosingRooms } from '../../api/serviceClosing';
+import {
+  fetchRoomServices,
+  fetchSVClosingRooms,
+  closingService as closingServiceAPI,
+} from '../../api/serviceClosing';
 
 const getServiceClosingRooms = createAsyncThunk('serviceClosing/rooms', async () => {
   const data = await fetchSVClosingRooms();
   return data;
+});
+
+const getRoomServices = createAsyncThunk('serviceClosing/roomServices', async params => {
+  const { roomId, month, year } = params;
+  const data = await fetchRoomServices(roomId, month, year);
+  return data;
+});
+
+const closingService = createAsyncThunk('serviceClosing/closing', async params => {
+  await closingServiceAPI(params);
 });
 
 const serviceClosingSlice = createSlice({
@@ -12,6 +26,7 @@ const serviceClosingSlice = createSlice({
     loading: false,
     error: null,
     rooms: null,
+    roomServices: null,
   },
   extraReducers: builder => {
     builder.addCase(getServiceClosingRooms.pending, state => {
@@ -25,7 +40,30 @@ const serviceClosingSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+
+    builder.addCase(getRoomServices.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(getRoomServices.fulfilled, (state, action) => {
+      state.loading = false;
+      state.roomServices = action.payload;
+    });
+    builder.addCase(getRoomServices.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    builder.addCase(closingService.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(closingService.fulfilled, state => {
+      state.loading = false;
+    });
+    builder.addCase(closingService.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
-export { getServiceClosingRooms };
+export { getServiceClosingRooms, getRoomServices, closingService };
 export default serviceClosingSlice.reducer;

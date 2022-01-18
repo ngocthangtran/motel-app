@@ -39,7 +39,7 @@ function FormDateTimePicker({
       <Controller
         name={name}
         control={control}
-        defaultValue={null}
+        defaultValue={defaultValue}
         render={({ field: { onChange, onBlur, value } }) => (
           <>
             <TouchableOpacity onPress={onOpen} style={styles.touchable}>

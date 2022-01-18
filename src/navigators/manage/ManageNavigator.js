@@ -9,6 +9,7 @@ import {
   ROOM_TENANTS_SCREEN,
   SERVICES,
   SERVICE_CLOSING,
+  SERVICE_CLOSING_EDIT_SCREEN,
   SERVICE_EDIT_SCREEN,
   TENANT,
   TENANT_EDIT,
@@ -28,6 +29,7 @@ import HomeNavigator from './HomeNavigator';
 import ApartmentNavigator from './ApartmentNavigator';
 import ContractNavigator from './ContractNavigator';
 import ServiceClosingNavigator from './ServiceClosingNavigator';
+import ServiceClosingEditScreen from '../../screens/manage/ServiceClosingEditScreen';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +49,7 @@ export default React.memo(() => {
       <Stack.Screen name={ROOM_TENANTS_SCREEN} component={RoomTenantsScreen} />
       <Stack.Screen name={CONTRACT_EDIT_SCREEN} component={ContractEditScreen} />
       <Stack.Screen name={SERVICE_CLOSING} component={ServiceClosingNavigator} />
+      <Stack.Screen name={SERVICE_CLOSING_EDIT_SCREEN} component={ServiceClosingEditScreen} />
     </Stack.Navigator>
   );
 });

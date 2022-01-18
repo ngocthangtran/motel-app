@@ -1,12 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, SectionList } from 'react-native';
 import { List, useTheme } from 'react-native-paper';
+import { SERVICE_CLOSING_EDIT_SCREEN } from '../../constants/navigation';
 import ServiceClosingContext from '../../context/ServiceClosingContext';
 
 function ActiveServiceRoomsScreen(props) {
   const { rooms, loading, error } = React.useContext(ServiceClosingContext);
   const [data, setData] = useState([]);
   const { colors } = useTheme();
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (!rooms) setData([]);
@@ -25,6 +28,9 @@ function ActiveServiceRoomsScreen(props) {
       };
     });
   };
+
+  const handleItemPress = room => () => navigation.navigate(SERVICE_CLOSING_EDIT_SCREEN, room);
+
   return (
     <View style={styles.container}>
       <SectionList
@@ -35,6 +41,7 @@ function ActiveServiceRoomsScreen(props) {
             <List.Item
               title={item.name}
               left={props => <List.Icon {...props} icon='handshake' />}
+              onPress={handleItemPress(item)}
             />
           );
         }}

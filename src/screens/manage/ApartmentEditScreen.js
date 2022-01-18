@@ -70,11 +70,11 @@ function ApartmentEditScreen(props) {
         <Form validationSchema={validationSchema}>
           <FormTextInput
             name='name'
-            defaultValue={apartment.name || ''}
+            defaultValue={apartment?.name || ''}
             label='Tên tòa nhà'
             placeholder='Nhập tên tòa nhà'
           />
-          <FormAddressPicker defaultWard={apartment.wardId} />
+          <FormAddressPicker defaultWard={apartment?.wardId} />
           <FormTextInput
             required
             name='address'
