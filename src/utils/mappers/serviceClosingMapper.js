@@ -6,7 +6,7 @@ const dateFormat = date => {
 
 const serviceClosingMapper = (data, contractId, services) => {
   return {
-    date: data.date,
+    date: dateFormat(date.date),
     contractId,
     services: services.map(s => {
       return {
