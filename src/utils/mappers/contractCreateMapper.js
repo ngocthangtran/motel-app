@@ -1,13 +1,14 @@
 import { unMask } from 'react-native-mask-text';
 
-const formatStartAt = st => {
-  return st.getFullYear() + '-' + (st.getMonth() + 1) + '-' + st.getDate();
+const formatDate = date => {
+  return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 };
 
 export default (contract, roomId) => {
   return {
     roomId,
-    startAt: formatStartAt(contract.startAt),
+    startAt: formatDate(contract.startAt),
+    endAt: formatDate(contract.endAt),
     paymentCycle: contract.paymentCycle,
     price: unMask(contract.price),
     deposit: unMask(contract.deposit),

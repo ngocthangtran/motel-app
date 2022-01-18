@@ -77,6 +77,7 @@ function ContractEditScreen(props) {
           <FormMaskedInput defaultValue={room.price} name='price' label='Giá thuê phòng' />
           <FormMaskedInput defaultValue={room.deposit} name='deposit' label='Tiền cọc' />
           <FormDateTimePicker name='startAt' label='Ngày bắt đầu' mode='date' />
+          <FormDateTimePicker name='endAt' label='Ngày kết thúc' mode='date' />
           <FormMaskedInput
             name='paymentCycle'
             defaultValue='1'
