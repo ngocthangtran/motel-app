@@ -26,6 +26,8 @@ const roomSlice = createSlice({
     reloadRoom: (state, action) => {
       if (action.payload.type === 'add') {
         state.rooms.push(action.payload.data);
+      } else if (action.payload.type === 'clearTenants') {
+        state.tenants.splice(0, state.tenants.length);
       }
     },
   },

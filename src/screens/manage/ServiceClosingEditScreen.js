@@ -4,7 +4,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import { AppBar } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Chip, List, Surface, Title, useTheme } from 'react-native-paper';
-import { closingService, getRoomServices } from '../../store/slices/serviceClosingSlice';
+import { closingService, getRoomServices, getServiceClosingRooms } from '../../store/slices/serviceClosingSlice';
 import {
   Form,
   FormDateTimePicker,
@@ -26,6 +26,9 @@ function ServiceClosingEditScreen(props) {
     const month = curDate.getMonth() + 1;
     const year = curDate.getFullYear();
     dispatch(getRoomServices({ roomId: room.roomId, month, year }));
+    return (() => {
+      dispatch(getServiceClosingRooms());
+    })
   }, []);
 
   const roomSV = useSelector(state => state.serviceClosing.roomServices);

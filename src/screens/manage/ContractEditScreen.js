@@ -58,7 +58,6 @@ function ContractEditScreen(props) {
 
   const handleSubmit = values => {
     const contract = contractCreateMapper(values, room.roomId);
-    console.log(contract);
     dispatch(createContractAction(contract))
       .unwrap()
       .then(() => {

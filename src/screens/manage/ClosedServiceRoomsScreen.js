@@ -34,7 +34,9 @@ function ClosedServiceRoomsScreen(props) {
           return (
             <List.Item
               title={item.name}
+              description={item.ward}
               left={props => <List.Icon {...props} icon='handshake' />}
+
             />
           );
         }}

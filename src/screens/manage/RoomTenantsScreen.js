@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppBar } from '../../components';
 import { FAB } from '../../components/common';
 import { CONTRACT, CONTRACT_EDIT_SCREEN } from '../../constants/navigation';
-import { getRoomTenants } from '../../store/slices/roomSlice';
+import { getRoomTenants, reloadRoom } from '../../store/slices/roomSlice';
 
 function RoomTenantsScreen(props) {
   const { room, apartmentId } = useRoute().params;
@@ -16,7 +16,10 @@ function RoomTenantsScreen(props) {
 
   useEffect(() => {
     dispatch(getRoomTenants(room.roomId));
-  }, []);
+    return (() => {
+      dispatch(reloadRoom({ type: "clearTenants" }))
+    })
+  }, [room]);
 
   const handleCreateContract = () =>
     navigation.navigate(CONTRACT_EDIT_SCREEN, { room, apartmentId });

@@ -11,9 +11,13 @@ const createTenant = createAsyncThunk('tenant/create', async params => {
   return await createTenantAPI(tenant);
 });
 
-const getTenants = createAsyncThunk('tenant/getAll', async () => {
-  const data = await fetchTenants();
-  return data;
+const getTenants = createAsyncThunk('tenant/getAll', async (params, { RejectWithValue }) => {
+  try {
+    const data = await fetchTenants();
+    return data;
+  } catch (error) {
+    return rejectWithValue({ error: error.response.data });
+  }
 });
 
 const deleteTenant = createAsyncThunk('tenant/delete', async tenantId => {
@@ -37,8 +41,12 @@ const tenantSlice = createSlice({
     uploadTenant: (state, action) => {
       if (action.payload.type === 'add') {
         state.tenants.push(action.payload.data);
+        console.log(1)
       } else if (action.payload.type === 'remove') {
+        console.log(2)
         state.tenants.splice(action.payload.index, 1);
+      } else if (action.payload.type === "clear") {
+        state.tenants.splice(0, state.tenants.length);
       }
     },
   },
@@ -68,6 +76,7 @@ const tenantSlice = createSlice({
     builder.addCase(getTenants.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
+      state.tenants = []
     });
 
     builder.addCase(deleteTenant.pending, (state, action) => {
