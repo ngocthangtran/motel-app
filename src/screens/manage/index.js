@@ -15,3 +15,4 @@ export { default as ApartmentRoomsScreen } from './ApartmentRoomsScreen';
 export { default as RoomEditScreen } from './RoomEditScreen';
 export { default as RoomTenantsScreen } from './RoomTenantsScreen';
 export { default as ContractEditScreen } from './ContractEditScreen';
+export { default as ContractDetailsScreen } from './ContractDetailsScreen';

@@ -14,6 +14,7 @@ function FormMaskedInput({
   required,
   defaultValue = 0,
   mask = '999 999',
+  disabled = false,
 }) {
   const {
     control,
@@ -40,6 +41,7 @@ function FormMaskedInput({
           //   render={props => (
           <Surface style={styles.inputContainer}>
             <MaskedTextInput
+              editable={!disabled}
               defaultValue={defaultValue + ''}
               value={value + ''}
               placeholder={placeholder}

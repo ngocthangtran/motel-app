@@ -3,6 +3,7 @@ import React from 'react';
 import {
   APARTMENT_EDIT_SCREEN,
   CONTRACTS,
+  CONTRACT_DETAILS_SCREEN,
   CONTRACT_EDIT_SCREEN,
   MAIN,
   ROOM_EDIT_SCREEN,
@@ -16,6 +17,7 @@ import {
 } from '../../constants/navigation';
 import {
   ApartmentEditScreen,
+  ContractDetailsScreen,
   ContractEditScreen,
   RoomEditScreen,
   RoomTenantsScreen,
@@ -50,6 +52,7 @@ export default React.memo(() => {
       <Stack.Screen name={CONTRACT_EDIT_SCREEN} component={ContractEditScreen} />
       <Stack.Screen name={SERVICE_CLOSING} component={ServiceClosingNavigator} />
       <Stack.Screen name={SERVICE_CLOSING_EDIT_SCREEN} component={ServiceClosingEditScreen} />
+      <Stack.Screen name={CONTRACT_DETAILS_SCREEN} component={ContractDetailsScreen} />
     </Stack.Navigator>
   );
 });

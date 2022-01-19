@@ -14,6 +14,7 @@ function FormDateTimePicker({
   required = false,
   defaultValue,
   mode = 'time',
+  disabled = false,
   ...rest
 }) {
   const {
@@ -42,7 +43,7 @@ function FormDateTimePicker({
         defaultValue={defaultValue}
         render={({ field: { onChange, onBlur, value } }) => (
           <>
-            <TouchableOpacity onPress={onOpen} style={styles.touchable}>
+            <TouchableOpacity onPress={onOpen} disabled={disabled} style={styles.touchable}>
               <TextInput
                 textAlign='center'
                 editable={false}

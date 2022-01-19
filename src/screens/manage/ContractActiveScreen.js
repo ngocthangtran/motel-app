@@ -4,9 +4,13 @@ import ContractContext from '../../context/ContractContext';
 import { List } from 'react-native-paper';
 import { Swipeable } from 'react-native-gesture-handler';
 import { SwipeableAction } from '../../components/common';
+import { useNavigation } from '@react-navigation/native';
+import { CONTRACT_DETAILS_SCREEN } from '../../constants/navigation';
 
 function ContractActiveScreen(props) {
   const { contracts, error, loading, onRefresh } = React.useContext(ContractContext);
+  const navigation = useNavigation();
+
   const handleTerminateContract = contract => () => {
     Alert.alert('Kết thúc hợp đồng', 'Bạn có chắc chắn muốn kết thúc hợp đồng?', [
       { text: 'Không' },
@@ -20,6 +24,8 @@ function ContractActiveScreen(props) {
       { text: 'Xóa' },
     ]);
   };
+
+  const handleContractPress = c => () => navigation.navigate(CONTRACT_DETAILS_SCREEN, c.contractId);
 
   return (
     <View style={styles.container}>
@@ -52,6 +58,7 @@ function ContractActiveScreen(props) {
                 }}
               >
                 <List.Item
+                  onPress={handleContractPress(item)}
                   title={`Hợp đồng phòng ${item.roomName}`}
                   description={item.nameBuilding}
                   left={props => <List.Icon {...props} icon='handshake' />}

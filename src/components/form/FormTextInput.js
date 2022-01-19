@@ -13,6 +13,7 @@ function FormTextInput({
   required,
   numeric = false,
   defaultValue,
+  disabled = false,
   ...rest
 }) {
   const {
@@ -31,6 +32,7 @@ function FormTextInput({
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             {...rest}
+            editable={!disabled}
             value={value}
             mode='outlined'
             placeholder={placeholder}

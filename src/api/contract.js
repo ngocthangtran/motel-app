@@ -14,9 +14,10 @@ export const editContract = contract => {
   return apiClient.post(`${endpoint}/repair`, contract);
 };
 
-export const deleteContract = contract => {
-  return apiClient.delete(`${endpoint}/delete/${contract.contractId}`);
+export const deleteContract = contractId => {
+  return apiClient.delete(`${endpoint}/delete/${contractId}`);
 };
-export const getContractDetail = contract => {
-  return apiClient.get(`${endpoint}/${contract.contractId}`);
-}
+
+export const fetchContractDetail = contractId => {
+  return apiClient.get(`${endpoint}/${contractId}`);
+};

@@ -3,7 +3,7 @@ const {
   createContract,
   fetchContracts,
   deleteContract,
-  getContractDetail,
+  fetchContractDetail,
 } = require('../../api/contract');
 
 const createContractAction = createAsyncThunk('contract/create', async contract => {
@@ -14,12 +14,17 @@ const fetchContractsAction = createAsyncThunk('contract/fetch', async () => {
   return await fetchContracts();
 });
 
-const getContractDetailAction = createAsyncThunk('contract/getDetail', async contract => {
-  return await getContractDetail(contract);
+// const getContractDetailAction = createAsyncThunk('contract/getDetail', async contract => {
+//   return await getContractDetail(contract);
+// });
+
+const deleteContractAction = createAsyncThunk('contract/delete', async contractId => {
+  return await deleteContract(contractId);
 });
 
-const deleteContractAction = createAsyncThunk('contract/delete', async contract => {
-  return await deleteContract(contract);
+const getContractDetail = createAsyncThunk('contract/details', async contractId => {
+  const contract = await fetchContractDetail(contractId);
+  return contract;
 });
 
 const contractSlide = createSlice({
@@ -28,6 +33,7 @@ const contractSlide = createSlice({
     contracts: null,
     loading: false,
     error: null,
+    contract: null,
   },
   reducers: {
     uploadContract: (state, action) => {
@@ -73,9 +79,21 @@ const contractSlide = createSlice({
     [deleteContractAction.fulfilled]: (state, action) => {
       state.loading = false;
     },
+
+    [getContractDetail.pending]: state => {
+      state.loading = true;
+    },
+    [getContractDetail.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    },
+    [getContractDetail.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.contract = action.payload;
+    },
   },
 });
 
-export { createContractAction, fetchContractsAction, deleteContractAction };
+export { createContractAction, fetchContractsAction, deleteContractAction, getContractDetail };
 export const { uploadContract } = contractSlide.actions;
 export default contractSlide.reducer;
