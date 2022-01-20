@@ -7,8 +7,8 @@ const formatDate = date => {
 export default (contract, roomId) => {
   return {
     roomId,
-    startAt: formatDate(contract.startAt),
-    endAt: formatDate(contract.endAt),
+    startAt: contract?.startAt ? formatDate(contract.startAt) : null,
+    endAt: contract?.startAt ? formatDate(contract.endAt) : null,
     paymentCycle: contract.paymentCycle,
     price: unMask(contract.price),
     deposit: unMask(contract.deposit),
