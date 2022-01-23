@@ -3,11 +3,11 @@ import {
   fetchRoomServices,
   fetchSVClosingRooms,
   closingService as closingServiceAPI,
+  deleteClosedService as delClosedAPI,
 } from '../../api/serviceClosing';
 
 const getServiceClosingRooms = createAsyncThunk('serviceClosing/rooms', async () => {
   const data = await fetchSVClosingRooms();
-  console.log(data);
   return data;
 });
 
@@ -19,6 +19,11 @@ const getRoomServices = createAsyncThunk('serviceClosing/roomServices', async pa
 
 const closingService = createAsyncThunk('serviceClosing/closing', async params => {
   await closingServiceAPI(params);
+});
+
+const deleteClosedService = createAsyncThunk('serviceClosing/delete', async params => {
+  const { date, contractId } = params;
+  await delClosedAPI({ date, contractId });
 });
 
 const serviceClosingSlice = createSlice({
@@ -64,7 +69,19 @@ const serviceClosingSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+
+    builder.addCase(deleteClosedService.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(deleteClosedService.fulfilled, state => {
+      console.log('ok');
+      state.loading = false;
+    });
+    builder.addCase(deleteClosedService.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
-export { getServiceClosingRooms, getRoomServices, closingService };
+export { getServiceClosingRooms, getRoomServices, closingService, deleteClosedService };
 export default serviceClosingSlice.reducer;

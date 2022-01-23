@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, SectionList } from 'react-native';
-import { List, useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
+import { ListItemSwipeable } from '../../components/common';
 import ServiceClosingContext from '../../context/ServiceClosingContext';
+import { dateToApiDate } from '../../utils/common';
+import { useDispatch } from 'react-redux';
+import { deleteClosedService } from '../../store/slices/serviceClosingSlice';
 
 function ClosedServiceRoomsScreen(props) {
-  const { rooms, loading, error } = React.useContext(ServiceClosingContext);
+  const { rooms, loading, error, onRefresh } = React.useContext(ServiceClosingContext);
   const [data, setData] = useState([]);
   const { colors } = useTheme();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!rooms) setData([]);
@@ -25,18 +30,34 @@ function ClosedServiceRoomsScreen(props) {
       };
     });
   };
+
+  const handleDeleteCS = item => () => {
+    const deleteBody = {
+      date: dateToApiDate(new Date()),
+      contractId: item.contractId,
+    };
+    dispatch(deleteClosedService(deleteBody))
+      .unwrap()
+      .then(() => alert('Deleted'))
+      .catch(() => alert('Error'));
+  };
+
   return (
     <View style={styles.container}>
       <SectionList
+        refreshing={loading}
+        onRefresh={onRefresh}
         sections={data}
         keyExtractor={(item, index) => item + index}
         renderItem={({ item }) => {
           return (
-            <List.Item
+            <ListItemSwipeable
               title={item.name}
               description={item.ward}
-              left={props => <List.Icon {...props} icon='handshake' />}
-
+              icon='handshake'
+              rightIcon='trash-can-outline'
+              rightBC='tomato'
+              onRightActionPress={handleDeleteCS(item)}
             />
           );
         }}

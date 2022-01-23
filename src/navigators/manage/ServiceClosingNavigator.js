@@ -26,10 +26,12 @@ const ServiceClosingNavigator = () => {
 
   const handleBack = () => navigation.goBack();
 
+  const onRefresh = () => dispatch(getServiceClosingRooms());
+
   return (
     <>
       <AppBar title='Chốt dịch vụ' onBack={handleBack} />
-      <ServiceClosingContext.Provider value={{ ...serviceClosingState }}>
+      <ServiceClosingContext.Provider value={{ ...serviceClosingState, onRefresh }}>
         <Tab.Navigator>
           <Tab.Screen
             name={ACTIVE_SERVICE_ROOMS_SCREEN}

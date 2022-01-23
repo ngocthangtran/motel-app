@@ -14,3 +14,7 @@ export const unitFormatter = (value, unit) =>
     format: `%v${unit ? ' ' : ''}%s`,
     precision: 0,
   });
+
+export const dateToApiDate = date => {
+  return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+};

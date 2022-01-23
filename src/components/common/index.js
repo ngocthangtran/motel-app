@@ -9,3 +9,4 @@ export { default as Container } from './Container';
 export { default as ExpandableText } from './ExpandableText';
 export { default as SwipeableAction } from './SwipeableAction';
 export { default as FAB } from './FAB';
+export { default as ListItemSwipeable } from './ListItemSwipeable';

@@ -14,3 +14,7 @@ export const fetchRoomServices = (roomId, month, date) => {
 export const closingService = closingData => {
   return apiClient.post('/manage/singleclosing/', closingData);
 };
+
+export const deleteClosedService = ({ date, contractId }) => {
+  return apiClient.delete('/manage/deleteclosing', { date, contractId });
+};

@@ -6,7 +6,7 @@ import { SERVICE_CLOSING_EDIT_SCREEN } from '../../constants/navigation';
 import ServiceClosingContext from '../../context/ServiceClosingContext';
 
 function ActiveServiceRoomsScreen(props) {
-  const { rooms, loading, error } = React.useContext(ServiceClosingContext);
+  const { rooms, loading, error, onRefresh } = React.useContext(ServiceClosingContext);
   const [data, setData] = useState([]);
   const { colors } = useTheme();
   const navigation = useNavigation();
@@ -34,6 +34,8 @@ function ActiveServiceRoomsScreen(props) {
   return (
     <View style={styles.container}>
       <SectionList
+        refreshing={loading}
+        onRefresh={onRefresh}
         sections={data}
         keyExtractor={(item, index) => item + index}
         renderItem={({ item }) => {
