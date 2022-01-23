@@ -16,5 +16,5 @@ export const closingService = closingData => {
 };
 
 export const deleteClosedService = ({ date, contractId }) => {
-  return apiClient.delete('/manage/deleteclosing', { date, contractId });
+  return apiClient.delete(`/manage/deleteclosing?date=${date}&contractId=${contractId}`);
 };

@@ -36,12 +36,16 @@ function ClosedServiceRoomsScreen(props) {
       date: dateToApiDate(new Date()),
       contractId: item.contractId,
     };
+  
     dispatch(deleteClosedService(deleteBody))
       .unwrap()
-      .then(() => alert('Deleted'))
+      .then(() => {
+        alert('Deleted')
+
+      })
       .catch(() => alert('Error'));
   };
-
+  console.log(data)
   return (
     <View style={styles.container}>
       <SectionList
