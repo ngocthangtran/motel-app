@@ -21,3 +21,7 @@ export const deleteContract = contractId => {
 export const fetchContractDetail = contractId => {
   return apiClient.get(`${endpoint}/${contractId}`);
 };
+
+export const terminateContract = contractId => {
+  return apiClient.get(`${endpoint}/terminate/${contractId}`);
+};

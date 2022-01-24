@@ -1,10 +1,19 @@
 import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import ContractContext from '../../context/ContractContext';
-import { List } from 'react-native-paper';
+import { ListItemSwipeable } from '../../components/common';
+import { useDispatch } from 'react-redux';
+import { terminateContract } from '../../store/slices/contractSlide';
 
 function ContractExpiredScreen(props) {
   const { contracts, error, loading, onRefresh } = React.useContext(ContractContext);
+  const dispatch = useDispatch();
+  const handleTerminate = contract => () => {
+    dispatch(terminateContract(contract.contractId))
+      .unwrap()
+      .then(() => alert('Terminated'))
+      .catch(() => alert('Error'));
+  };
   return (
     <View style={styles.container}>
       {contracts && (
@@ -15,10 +24,13 @@ function ContractExpiredScreen(props) {
           keyExtractor={i => i.contractId}
           renderItem={({ item }) => {
             return (
-              <List.Item
+              <ListItemSwipeable
                 title={`Hợp đồng phòng ${item.roomName}`}
                 description={item.nameBuilding}
-                left={props => <List.Icon {...props} icon='handshake' />}
+                icon='handshake'
+                rightIcon='stop-circle-outline'
+                rightBC='coral'
+                onRightActionPress={handleTerminate(item)}
               />
             );
           }}

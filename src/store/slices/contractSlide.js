@@ -1,10 +1,11 @@
-const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
-const {
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
   createContract,
   fetchContracts,
   deleteContract,
   fetchContractDetail,
-} = require('../../api/contract');
+  terminateContract as terminateContractAPI,
+} from '../../api/contract';
 
 const createContractAction = createAsyncThunk('contract/create', async contract => {
   return await createContract(contract);
@@ -25,6 +26,10 @@ const deleteContractAction = createAsyncThunk('contract/delete', async contractI
 const getContractDetail = createAsyncThunk('contract/details', async contractId => {
   const contract = await fetchContractDetail(contractId);
   return contract;
+});
+
+const terminateContract = createAsyncThunk('contract/terminate', async contractId => {
+  await terminateContractAPI(contractId);
 });
 
 const contractSlide = createSlice({
@@ -91,9 +96,26 @@ const contractSlide = createSlice({
       state.loading = false;
       state.contract = action.payload;
     },
+
+    [terminateContract.pending]: state => {
+      state.loading = true;
+    },
+    [terminateContract.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [terminateContract.fulfilled]: state => {
+      state.loading = false;
+    },
   },
 });
 
-export { createContractAction, fetchContractsAction, deleteContractAction, getContractDetail };
+export {
+  terminateContract,
+  createContractAction,
+  fetchContractsAction,
+  deleteContractAction,
+  getContractDetail,
+};
 export const { uploadContract } = contractSlide.actions;
 export default contractSlide.reducer;
