@@ -57,7 +57,14 @@ function ContractEditScreen(props) {
   };
 
   const handleSubmit = values => {
-    const contract = contractCreateMapper(values, room.roomId);
+    var contract = contractCreateMapper(values, room.roomId);
+    contract.serviceIds.map(el => {
+      if (el.startValue) {
+        console.log('run here')
+        el.startValue = el.startValue.split('.').join('');
+      }
+      return el
+    })
     dispatch(createContractAction(contract))
       .unwrap()
       .then(() => {
