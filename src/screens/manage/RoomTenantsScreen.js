@@ -1,11 +1,11 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Text, Alert, FlatList } from 'react-native';
-import { HelperText, List, Surface, Title } from 'react-native-paper';
+import { View, StyleSheet, Alert, FlatList } from 'react-native';
+import { List, Surface, Title } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar } from '../../components';
 import { FAB } from '../../components/common';
-import { CONTRACT, CONTRACT_EDIT_SCREEN } from '../../constants/navigation';
+import { CONTRACT_EDIT_SCREEN } from '../../constants/navigation';
 import { getRoomTenants, reloadRoom } from '../../store/slices/roomSlice';
 
 function RoomTenantsScreen(props) {
@@ -16,9 +16,9 @@ function RoomTenantsScreen(props) {
 
   useEffect(() => {
     dispatch(getRoomTenants(room.roomId));
-    return (() => {
-      dispatch(reloadRoom({ type: "clearTenants" }))
-    })
+    return () => {
+      dispatch(reloadRoom({ type: 'clearTenants' }));
+    };
   }, [room]);
 
   const handleCreateContract = () =>

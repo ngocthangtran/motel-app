@@ -60,11 +60,10 @@ function ContractEditScreen(props) {
     var contract = contractCreateMapper(values, room.roomId);
     contract.serviceIds.map(el => {
       if (el.startValue) {
-        console.log('run here')
         el.startValue = el.startValue.split('.').join('');
       }
-      return el
-    })
+      return el;
+    });
     dispatch(createContractAction(contract))
       .unwrap()
       .then(() => {

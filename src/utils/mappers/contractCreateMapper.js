@@ -8,7 +8,7 @@ export default (contract, roomId) => {
   return {
     roomId,
     startAt: contract?.startAt ? formatDate(contract.startAt) : null,
-    endAt: contract?.startAt ? formatDate(contract.endAt) : null,
+    endAt: contract?.endAt ? formatDate(contract.endAt) : null,
     paymentCycle: contract.paymentCycle,
     price: unMask(contract.price),
     deposit: unMask(contract.deposit),
