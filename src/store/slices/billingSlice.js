@@ -12,11 +12,7 @@ const getRoomsWithoutBill = createAsyncThunk('billing/rooms', async date => {
   return data;
 });
 
-const getBillSvInfo = createAsyncThunk('billing/svInfo', async params => {
-  const { roomId, date } = params;
-  const data = await fetchBillSvInfo(roomId, date);
-  return data;
-});
+
 
 const billingSlice = createSlice({
   name: 'billing',
@@ -25,7 +21,6 @@ const billingSlice = createSlice({
     loading: false,
     error: null,
     rooms: null,
-    billSvInfo: null,
   },
   extraReducers: builder => {
     builder.addCase(getBills.pending, state => {
@@ -52,18 +47,7 @@ const billingSlice = createSlice({
       state.error = action.payload;
     });
 
-    builder.addCase(getBillSvInfo.pending, state => {
-      state.loading = true;
-    });
-    builder.addCase(getBillSvInfo.fulfilled, (state, action) => {
-      state.loading = false;
-      state.billSvInfo = action.payload;
-    });
-    builder.addCase(getBillSvInfo.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    });
   },
 });
-export { getBills, getRoomsWithoutBill, getBillSvInfo };
+export { getBills, getRoomsWithoutBill };
 export default billingSlice.reducer;

@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { View, StyleSheet, Text } from 'react-native';
 import { Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchBillSvInfo } from '../../api/billing';
 import { AppBar } from '../../components';
 import { Form, FormDateTimePicker, FormPicker } from '../../components/form';
-import { getBillSvInfo, getRoomsWithoutBill } from '../../store/slices/billingSlice';
+import { getRoomsWithoutBill } from '../../store/slices/billingSlice';
+import { getBillSvInfo } from '../../store/slices/billingSvSlide';
 
 function BillEditScreen(props) {
   const dispatch = useDispatch();
-  const { rooms, loading, billSvInfo } = useSelector(state => state.billing);
+  const { rooms, loading } = useSelector(state => state.billing);
   useEffect(() => {
     dispatch(getRoomsWithoutBill(new Date()));
   }, []);
@@ -26,10 +28,16 @@ function BillEditScreen(props) {
 
   const RenderServices = () => {
     const room = useWatch({ name: 'room' });
+    const { billSvInfo, loading } = useSelector(state => state.billingSv);
+
     useEffect(() => {
       if (room != null) {
         dispatch(getBillSvInfo({ roomId: room.roomId, date: new Date() }));
-        console.log('ok');
+        // const getData = async () => {
+        //   const data = await fetchBillSvInfo(room.roomId, new Date())
+        //   setBillSvInfo(data)
+        // }
+        // getData()
       }
     }, [room]);
     return <Text>{JSON.stringify(billSvInfo)}</Text>;

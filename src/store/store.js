@@ -16,6 +16,7 @@ import tenantReducer from './slices/tenantSlice';
 import contractReducer from './slices/contractSlide';
 import serviceClosingReducer from './slices/serviceClosingSlice';
 import billingReducer from './slices/billingSlice';
+import billingSv from './slices/billingSvSlide';
 
 export const store = configureStore({
   reducer: {
@@ -37,5 +38,6 @@ export const store = configureStore({
     contract: contractReducer,
     serviceClosing: serviceClosingReducer,
     billing: billingReducer,
+    billingSv: billingSv
   },
 });
