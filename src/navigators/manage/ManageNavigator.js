@@ -2,6 +2,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import {
   APARTMENT_EDIT_SCREEN,
+  BILLING,
+  BILL_EDIT_SCREEN,
   CONTRACTS,
   CONTRACT_DETAILS_SCREEN,
   CONTRACT_EDIT_SCREEN,
@@ -32,7 +34,8 @@ import ApartmentNavigator from './ApartmentNavigator';
 import ContractNavigator from './ContractNavigator';
 import ServiceClosingNavigator from './ServiceClosingNavigator';
 import ServiceClosingEditScreen from '../../screens/manage/ServiceClosingEditScreen';
-
+import BillingNavigator from './BillingNavigator';
+import BillEditScreen from '../../screens/manage/BillEditScreen';
 const Stack = createStackNavigator();
 
 export default React.memo(() => {
@@ -53,6 +56,8 @@ export default React.memo(() => {
       <Stack.Screen name={SERVICE_CLOSING} component={ServiceClosingNavigator} />
       <Stack.Screen name={SERVICE_CLOSING_EDIT_SCREEN} component={ServiceClosingEditScreen} />
       <Stack.Screen name={CONTRACT_DETAILS_SCREEN} component={ContractDetailsScreen} />
+      <Stack.Screen name={BILLING} component={BillingNavigator} />
+      <Stack.Screen name={BILL_EDIT_SCREEN} component={BillEditScreen} />
     </Stack.Navigator>
   );
 });

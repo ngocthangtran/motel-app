@@ -15,6 +15,7 @@ import roomReducer from './slices/roomSlice';
 import tenantReducer from './slices/tenantSlice';
 import contractReducer from './slices/contractSlide';
 import serviceClosingReducer from './slices/serviceClosingSlice';
+import billingReducer from './slices/billingSlice';
 
 export const store = configureStore({
   reducer: {
@@ -35,5 +36,6 @@ export const store = configureStore({
     tenant: tenantReducer,
     contract: contractReducer,
     serviceClosing: serviceClosingReducer,
+    billing: billingReducer,
   },
 });
