@@ -12,8 +12,6 @@ const getRoomsWithoutBill = createAsyncThunk('billing/rooms', async date => {
   return data;
 });
 
-
-
 const billingSlice = createSlice({
   name: 'billing',
   initialState: {
@@ -46,7 +44,6 @@ const billingSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
-
   },
 });
 export { getBills, getRoomsWithoutBill };

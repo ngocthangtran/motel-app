@@ -56,7 +56,7 @@ function FormMaskedInput({
               placeholderTextColor={colors.placeholder}
               style={[styles.textInput, { color: colors.text }]}
             />
-            {unit && <Text style={styles.unit}>{unit}</Text>}
+            {unit && <Text style={{ ...styles.unit, color: colors.primary }}>{unit}</Text>}
           </Surface>
           //   )}
           // />
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   unit: {
     color: 'green',
     fontWeight: 'bold',
-    borderBottomColor: 'red',
+    // borderBottomColor: 'red',
   },
 });
 
