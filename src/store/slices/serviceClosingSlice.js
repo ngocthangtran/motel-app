@@ -74,7 +74,6 @@ const serviceClosingSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(deleteClosedService.fulfilled, state => {
-      console.log('ok');
       state.loading = false;
     });
     builder.addCase(deleteClosedService.rejected, (state, action) => {

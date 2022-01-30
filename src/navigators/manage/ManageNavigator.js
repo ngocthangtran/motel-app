@@ -16,6 +16,7 @@ import {
   SERVICE_EDIT_SCREEN,
   TENANT,
   TENANT_EDIT,
+  BILL_DETAILS_SCREEN,
 } from '../../constants/navigation';
 import {
   ApartmentEditScreen,
@@ -26,6 +27,7 @@ import {
   ServicesScreen,
   TenantEditScreen,
   TenantsScreen,
+  BillDetailsScreen,
 } from '../../screens/manage';
 import ServiceEditScreen from '../../screens/manage/ServiceEditScreen';
 import { MainScreen } from '../../screens/search';
@@ -58,6 +60,7 @@ export default React.memo(() => {
       <Stack.Screen name={CONTRACT_DETAILS_SCREEN} component={ContractDetailsScreen} />
       <Stack.Screen name={BILLING} component={BillingNavigator} />
       <Stack.Screen name={BILL_EDIT_SCREEN} component={BillEditScreen} />
+      <Stack.Screen name={BILL_DETAILS_SCREEN} component={BillDetailsScreen} />
     </Stack.Navigator>
   );
 });

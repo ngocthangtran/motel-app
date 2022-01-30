@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { AppBar } from '../../components';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +23,6 @@ function ContractsScreen(props) {
     <View style={styles.container}>
       <AppBar title='Tất cả hợp đồng' onBack={handleBack} />
       <Surface style={styles.contentContainer}>
-        {console.log(contracts)}
         {contracts && (
           <FlatList
             data={contracts.takeEffect.data}

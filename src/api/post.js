@@ -2,10 +2,6 @@ import apiClient from './apiClient';
 
 const endpoint = '/posts';
 
-// export const createPost = data => {
-//   return apiClient.post(endpoint, data);
-// };
-
 export const getPosts = page => {
   return apiClient.get(`${endpoint}/${page}`);
 };

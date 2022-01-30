@@ -5,6 +5,7 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 const getBillSvInfo = createAsyncThunk('billing/svInfo', async params => {
   const { roomId, date } = params;
   const data = await fetchBillSvInfo(roomId, date);
+  // console.log(data);
   return data;
 });
 

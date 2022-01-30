@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Caption, HelperText, useTheme } from 'react-native-paper';
+import { Caption, HelperText } from 'react-native-paper';
 
 function FormFieldWrapper({ label, error = '', required = false, renderRightLabel, children }) {
-  const { colors } = useTheme();
   return (
     <View style={styles.container}>
       <View style={styles.labelContainer}>

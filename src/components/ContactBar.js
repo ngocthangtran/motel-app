@@ -1,34 +1,19 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, Divider, Surface } from 'react-native-paper';
+import { Button, Surface } from 'react-native-paper';
 
 function ContactBar({ onMessage, onCall, onMapDirect }) {
   return (
     <Surface style={styles.container}>
-      <Button
-        uppercase={false}
-        icon='email-open-outline'
-        style={styles.button}
-        onPress={onMessage}
-      >
+      <Button uppercase={false} icon='email-open-outline' style={styles.button} onPress={onMessage}>
         Nhắn tin
       </Button>
       <View style={styles.divider} />
-      <Button
-        uppercase={false}
-        icon='phone'
-        style={styles.button}
-        onPress={onCall}
-      >
+      <Button uppercase={false} icon='phone' style={styles.button} onPress={onCall}>
         Gọi
       </Button>
       <View style={styles.divider} />
-      <Button
-        uppercase={false}
-        icon='map-marker-left'
-        style={styles.button}
-        onPress={onMapDirect}
-      >
+      <Button uppercase={false} icon='map-marker-left' style={styles.button} onPress={onMapDirect}>
         Chỉ đường
       </Button>
     </Surface>

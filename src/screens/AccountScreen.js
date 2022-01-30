@@ -47,7 +47,6 @@ function AccountScreen(props) {
 
   return (
     <Surface style={styles.container}>
-      {console.log(token)}
       <Appbar.Header>
         <Appbar.Content title='Account' />
       </Appbar.Header>

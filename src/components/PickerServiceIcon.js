@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Text } from 'react-native-paper';
 
 function PickerServiceIcon({ item, onPress }) {
   return (

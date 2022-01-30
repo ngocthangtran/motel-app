@@ -2,9 +2,7 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { StyleSheet, TextInput } from 'react-native';
 import { useTheme } from 'react-native-paper';
-// import { TextInput } from 'react-native-paper';
 import FormFieldWrapper from './FormFieldWrapper';
-import * as Yup from 'yup';
 
 function FormTextInput({
   name,

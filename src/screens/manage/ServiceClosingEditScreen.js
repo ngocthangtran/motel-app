@@ -1,10 +1,14 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { AppBar } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
-import { Chip, List, Surface, Title, useTheme } from 'react-native-paper';
-import { closingService, getRoomServices, getServiceClosingRooms } from '../../store/slices/serviceClosingSlice';
+import { Chip, Surface, useTheme } from 'react-native-paper';
+import {
+  closingService,
+  getRoomServices,
+  getServiceClosingRooms,
+} from '../../store/slices/serviceClosingSlice';
 import {
   Form,
   FormDateTimePicker,
@@ -26,9 +30,9 @@ function ServiceClosingEditScreen(props) {
     const month = curDate.getMonth() + 1;
     const year = curDate.getFullYear();
     dispatch(getRoomServices({ roomId: room.roomId, month, year }));
-    return (() => {
+    return () => {
       dispatch(getServiceClosingRooms());
-    })
+    };
   }, []);
 
   const roomSV = useSelector(state => state.serviceClosing.roomServices);
@@ -47,7 +51,6 @@ function ServiceClosingEditScreen(props) {
 
   return (
     <View style={styles.container}>
-      {console.log(room)}
       <AppBar title='Chốt dịch vụ phòng' onBack={handleBack} />
       <Surface style={styles.contentContainer}>
         <Form>

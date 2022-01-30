@@ -25,16 +25,16 @@ function TenantEditScreen(props) {
     const tenant = tenantCreateMapper(values);
     dispatch(createTenant({ tenant }))
       .unwrap()
-      .then((res) => {
-        console.log(typeof (res))
-        dispatch(uploadTenant({
-          type: "add",
-          data: res
-        }))
+      .then(res => {
+        dispatch(
+          uploadTenant({
+            type: 'add',
+            data: res,
+          })
+        );
         alert('ok');
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(err => {
         alert('error');
       });
   };

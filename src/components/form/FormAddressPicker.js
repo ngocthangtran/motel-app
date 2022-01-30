@@ -23,7 +23,6 @@ function FormAddressPicker({ defaultWard }) {
     const ward = WARDS.find(w => {
       return w.wardId === defaultWard;
     });
-    console.log(ward);
   }, []);
 
   const handleProvinceSelect = async p => {

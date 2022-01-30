@@ -18,3 +18,4 @@ export { default as ContractEditScreen } from './ContractEditScreen';
 export { default as ContractDetailsScreen } from './ContractDetailsScreen';
 export { default as PaidBillsScreen } from './PaidBillsScreen';
 export { default as UnpaidBillsScreen } from './UnpaidBillsScreen';
+export { default as BillDetailsScreen } from './BillDetailsScreen';

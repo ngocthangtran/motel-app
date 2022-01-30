@@ -26,7 +26,7 @@ const BillingNavigator = () => {
 
   const handleBack = () => navigation.goBack();
   return (
-    <BillingContext.Provider value={{ ...billingState }}>
+    <BillingContext.Provider value={{ ...billingState, refreshBills }}>
       <AppBar title='Hóa đơn' onBack={handleBack} />
       <Tab.Navigator>
         <Tab.Screen

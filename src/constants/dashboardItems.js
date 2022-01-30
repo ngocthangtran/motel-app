@@ -1,5 +1,5 @@
 import t from '../utils/i18n';
-import { BILLING, CONTRACTS, SERVICES, SERVICE_CLOSING, TENANT } from './navigation';
+import { ACCOUNT, BILLING, CONTRACTS, SERVICES, SERVICE_CLOSING, TENANT } from './navigation';
 
 export default [
   { title: t('dashboard_services'), icon: 'ceiling-light', path: SERVICES },
@@ -7,5 +7,5 @@ export default [
   { title: t('dashboard_bills'), icon: 'pencil-box-outline', path: BILLING },
   { title: t('dashboard_tenants'), icon: 'human', path: TENANT },
   { title: t('dashboard_contract'), icon: 'handshake', path: CONTRACTS },
-  { title: t('dashboard_deposit'), icon: 'cash-marker', path: '' },
+  { title: t('dashboard_account'), icon: 'account', path: ACCOUNT },
 ];

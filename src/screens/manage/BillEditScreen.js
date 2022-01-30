@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { View, StyleSheet, Text } from 'react-native';
-import { Chip, List, useTheme } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { useWatch } from 'react-hook-form';
+import { View, StyleSheet } from 'react-native';
+import { Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBillSvInfo } from '../../api/billing';
 import { AppBar } from '../../components';
 import { Gap } from '../../components/common';
 import {
   Form,
-  FormDateTimePicker,
+  FormHiddenField,
   FormMaskedInput,
   FormPicker,
   FormRow,
   FormSubmitButton,
 } from '../../components/form';
-import { getRoomsWithoutBill } from '../../store/slices/billingSlice';
+import { createBill, getRoomsWithoutBill } from '../../store/slices/billingSlice';
 import { getBillSvInfo } from '../../store/slices/billingSvSlide';
+import { billCreateMapper } from '../../utils/mappers';
 
 function BillEditScreen(props) {
   const dispatch = useDispatch();
   const { rooms, loading } = useSelector(state => state.billing);
+  const navigation = useNavigation();
+
   useEffect(() => {
     dispatch(getRoomsWithoutBill(new Date()));
+    console.log(rooms);
   }, []);
 
   const mapToFormPickerItems = () => {
@@ -36,7 +40,6 @@ function BillEditScreen(props) {
 
   const RenderServices = () => {
     const room = useWatch({ name: 'room' });
-    const { colors } = useTheme();
     const { billSvInfo, loading } = useSelector(state => state.billingSv);
 
     useEffect(() => {
@@ -44,49 +47,35 @@ function BillEditScreen(props) {
         dispatch(getBillSvInfo({ roomId: room.roomId, date: new Date() }));
       }
     }, [room]);
-    if (!room) return null;
+    if (!room || !billSvInfo) return null;
     return (
       <>
+        <FormHiddenField name='info' defaultValue={billSvInfo} />
         <Chip icon='information-outline' style={styles.chip}>
           Chi tiết
         </Chip>
-        <FormMaskedInput
-          disabled
-          name='diff'
-          label='Số ngày'
-          defaultValue={billSvInfo?.diffDays}
-          unit='Ngày'
-        />
-        <FormMaskedInput
-          disabled
-          name='rent'
-          label='Số tiền'
-          defaultValue={billSvInfo?.rent}
-          unit='VNĐ'
-        />
+        <FormMaskedInput disabled label='Số ngày' defaultValue={billSvInfo?.diffDays} unit='Ngày' />
+        <FormMaskedInput disabled label='Số tiền' defaultValue={billSvInfo?.rent} unit='VNĐ' />
         {billSvInfo?.service.map(s => {
           switch (s.feeBaseOnId) {
             case '8b0871c8-5f03-4507-997f-c2008e67937d':
               return (
                 <View key={s.serviceId}>
-                  <List.Item
-                    title={s.name}
-                    style={{ marginBottom: 12 }}
-                    titleStyle={{ fontWeight: 'bold', color: colors.primary }}
-                    left={props => <List.Icon {...props} icon={s.icon} color={colors.primary} />}
-                  />
+                  <Chip icon={s.icon} style={styles.chip}>
+                    {s.name}
+                  </Chip>
                   <FormRow>
                     <FormMaskedInput
-                      name={s.name + '_last'}
+                      name={s.serviceId + '_last'}
                       label='Chỉ sốt bắt đầu'
-                      defaultValue={s.lastValue}
+                      defaultValue={s?.lastValue}
                       unit={s.unit}
                     />
                     <Gap />
                     <FormMaskedInput
-                      name={s.name + '_curr'}
+                      name={s.serviceId + '_curr'}
                       label='Chỉ sốt kết thúc'
-                      defaultValue={s.currentValue}
+                      defaultValue={s?.currentValue}
                       unit={s.unit}
                     />
                   </FormRow>
@@ -95,6 +84,7 @@ function BillEditScreen(props) {
             case 'd6122b9b-3718-4e05-bb5d-406e8efe7875': {
               return (
                 <FormMaskedInput
+                  disabled
                   key={s.serviceId}
                   defaultValue={s.price}
                   label={s.name}
@@ -104,21 +94,48 @@ function BillEditScreen(props) {
             }
             case '6c368419-c07c-4b72-b8a0-a2b5c96ee030': {
               return (
-                <FormMaskedInput
-                  key={s.serviceId}
-                  label={s.name}
-                  unit={`x${billSvInfo.renterCount} ${s.unit}`}
-                />
+                <View key={s.serviceId}>
+                  <Chip icon={s.icon} style={styles.chip}>
+                    {s.name}
+                  </Chip>
+                  <FormRow>
+                    <FormMaskedInput
+                      disabled
+                      name={s.serviceId}
+                      key={s.serviceId + '_'}
+                      label='Giá'
+                    />
+                    <Gap />
+                    <FormMaskedInput
+                      key={s.serviceId}
+                      name={s.serviceId + '_rc'}
+                      label={'Số người sử dụng'}
+                      unit={s.unit}
+                      defaultValue={billSvInfo.renterCount}
+                    />
+                  </FormRow>
+                </View>
               );
             }
-            default:
-              break;
           }
         })}
+        <FormSubmitButton title='Tạo hóa đơn' onSubmit={handleSubmit} />
       </>
     );
   };
 
+  const handleSubmit = values => {
+    const data = billCreateMapper(values);
+    dispatch(createBill(data))
+      .unwrap()
+      .then(() => {
+        alert('Tạo hóa đơn thành công');
+        navigation.goBack();
+      })
+      .catch(() => {
+        alert('Lỗi tạo hóa đơn');
+      });
+  };
   return (
     <View style={styles.container}>
       <AppBar title='Tạo hóa đơn' />
@@ -127,7 +144,6 @@ function BillEditScreen(props) {
           <Chip icon='information-outline' style={styles.chip}>
             Thông tin
           </Chip>
-          <FormDateTimePicker name='date' mode='date' label='Ngày tạo hóa đơn' />
           <FormPicker
             items={mapToFormPickerItems()}
             name='room'
@@ -135,7 +151,6 @@ function BillEditScreen(props) {
             placeholder='Chọn phòng'
           />
           <RenderServices />
-          <FormSubmitButton title='Tạo hóa đơn' />
         </Form>
       </View>
     </View>

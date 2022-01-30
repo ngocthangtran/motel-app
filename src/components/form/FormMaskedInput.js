@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { StyleSheet } from 'react-native';
 import { MaskedTextInput } from 'react-native-mask-text';
-import { Surface, Text, TextInput } from 'react-native-paper';
+import { Surface, Text } from 'react-native-paper';
 import FormFieldWrapper from './FormFieldWrapper';
 import { useTheme } from 'react-native-paper';
 

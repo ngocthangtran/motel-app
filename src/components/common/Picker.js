@@ -21,8 +21,6 @@ function Picker({
     onItemSelect(item);
   };
 
-  // const handleOpen = () =>
-
   return (
     <View style={styles.container}>
       <TouchableOpacity

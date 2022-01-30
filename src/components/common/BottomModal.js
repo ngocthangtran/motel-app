@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Modal,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Touchable,
-  Pressable,
-} from 'react-native';
-import { Divider, IconButton, Surface } from 'react-native-paper';
+import { View, StyleSheet, Modal, Pressable } from 'react-native';
+import { IconButton, Surface } from 'react-native-paper';
 
 function BottomModal({ visible, onClose, children }) {
   return (

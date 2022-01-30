@@ -13,3 +13,4 @@ export { default as FormLocationPicker } from './FormLocationPicker';
 export { default as FormUtilitiesPicker } from './FormUtilitiesPicker';
 export { default as FormUtilsPicker } from './FormUtilsPicker';
 export { default as FormMultiSelect } from './FormMultiSelect';
+export { default as FormHiddenField } from './FormHiddenField';

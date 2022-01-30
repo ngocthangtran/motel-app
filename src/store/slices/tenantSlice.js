@@ -11,7 +11,7 @@ const createTenant = createAsyncThunk('tenant/create', async params => {
   return await createTenantAPI(tenant);
 });
 
-const getTenants = createAsyncThunk('tenant/getAll', async (params, { RejectWithValue }) => {
+const getTenants = createAsyncThunk('tenant/getAll', async (_params, { RejectWithValue }) => {
   try {
     const data = await fetchTenants();
     return data;
@@ -41,17 +41,15 @@ const tenantSlice = createSlice({
     uploadTenant: (state, action) => {
       if (action.payload.type === 'add') {
         state.tenants.push(action.payload.data);
-        console.log(1)
       } else if (action.payload.type === 'remove') {
-        console.log(2)
         state.tenants.splice(action.payload.index, 1);
-      } else if (action.payload.type === "clear") {
+      } else if (action.payload.type === 'clear') {
         state.tenants.splice(0, state.tenants.length);
       }
     },
   },
   extraReducers: builder => {
-    builder.addCase(createTenant.pending, (state, action) => {
+    builder.addCase(createTenant.pending, (state, _action) => {
       state.loading = true;
       state.error = null;
     });
@@ -64,7 +62,7 @@ const tenantSlice = createSlice({
       state.error = action.payload;
     });
 
-    builder.addCase(getTenants.pending, (state, action) => {
+    builder.addCase(getTenants.pending, (state, _action) => {
       state.loading = true;
       state.error = null;
     });
@@ -76,15 +74,15 @@ const tenantSlice = createSlice({
     builder.addCase(getTenants.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
-      state.tenants = []
+      state.tenants = [];
     });
 
-    builder.addCase(deleteTenant.pending, (state, action) => {
+    builder.addCase(deleteTenant.pending, (state, _action) => {
       state.loading = true;
       state.error = null;
     });
 
-    builder.addCase(deleteTenant.fulfilled, (state, action) => {
+    builder.addCase(deleteTenant.fulfilled, (state, _action) => {
       state.loading = false;
       state.error = null;
     });
@@ -93,7 +91,7 @@ const tenantSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
-    builder.addCase(getNoContractTenants.pending, (state, action) => {
+    builder.addCase(getNoContractTenants.pending, (state, _action) => {
       state.loading = true;
       state.error = null;
     });
