@@ -21,6 +21,11 @@ function ApartmentRoomsScreen(props) {
   const handleItemPress = room => () => {
     navigation.navigate(ROOM_TENANTS_SCREEN, { room, apartmentId: apartment.buildingId });
   };
+
+  const handleDeleteRoom = room => {
+    console.log(room)
+  }
+
   const handleRefresh = () => dispatch(getRooms(apartment.buildingId));
   return (
     <View style={styles.container}>
@@ -32,7 +37,11 @@ function ApartmentRoomsScreen(props) {
         numColumns={2}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
         renderItem={({ item }) => {
-          return <RoomItem name={item.name} price={item.price} onPress={handleItemPress(item)} />;
+          return <RoomItem
+            name={item.name}
+            price={item.price}
+            onPress={handleItemPress(item)}
+            onDelete={handleDeleteRoom(item)} />;
         }}
       />
       <FAB onPress={handleFabPress} />

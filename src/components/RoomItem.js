@@ -3,26 +3,29 @@ import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Surface, Text, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { vndFormatter } from '../utils/common';
+import Pressable from './Pressable';
 
-function RoomItem({ name = '', price = '', onPress }) {
+function RoomItem({ name = '', price = '', onPress, onDelete, onEdit }) {
   const { colors } = useTheme();
   return (
-    <TouchableWithoutFeedback
+    <Pressable
       onPress={onPress}
-      onLongPress={() => {
-        alert('ok');
-      }}
+      actionsHorizontal
+      style={[styles.container, { backgroundColor: colors.surface }]}
+      longPressActions={[
+        { icon: 'trash-can-outline', onPress: onDelete, color: 'tomato' },
+        { icon: 'circle-edit-outline', onPress: onEdit },
+      ]}
     >
-      <Surface style={styles.container}>
-        <MaterialCommunityIcons name='microsoft-windows' size={80} color='#7f7f7f' />
-        <Text style={{ color: colors.primary, marginVertical: 12, fontWeight: 'bold' }}>
-          {name}
-        </Text>
-        <Text style={styles.address} numberOfLines={2}>
-          {vndFormatter(price)}
-        </Text>
-      </Surface>
-    </TouchableWithoutFeedback>
+      <MaterialCommunityIcons name='microsoft-windows' size={80} color='#7f7f7f' />
+      <Text style={{ color: colors.primary, marginVertical: 12, fontWeight: 'bold' }}>
+        {name}
+      </Text>
+      <Text style={styles.address} numberOfLines={2}>
+        {vndFormatter(price)}
+      </Text>
+    </Pressable>
+
   );
 }
 
@@ -33,13 +36,12 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     marginHorizontal: 2,
     alignItems: 'center',
-    elevation: 2,
     borderRadius: 6,
     padding: 12,
+    elevation: 1,
   },
   address: {
-    fontSize: 11,
-    marginBottom: 12,
+    fontSize: 12,
   },
 });
 
