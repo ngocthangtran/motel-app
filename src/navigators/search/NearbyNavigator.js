@@ -8,6 +8,7 @@ import { Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { getNearbyPost } from '../../store/slices/nearbySlice';
 import NearbyContext from '../../context/NearbyContext';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -17,6 +18,7 @@ const NearbyNavigator = () => {
     longitude: 108.01448936814607,
   });
   const [radius, setRadius] = useState(2);
+  const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
@@ -44,9 +46,11 @@ const NearbyNavigator = () => {
     dispatch(getNearbyPost({ lat: latitude, lng: longitude, radius }));
   };
 
+  const handleBack = () => navigation.goBack();
+
   return (
     <NearbyContext.Provider value={{ currentLocation, radius }}>
-      <AppBar title='Tìm xung quanh' />
+      <AppBar title='Tìm xung quanh' onBack={handleBack} />
       <Tab.Navigator>
         <Tab.Screen
           name={NEARBY_MAP_SCREEN}
