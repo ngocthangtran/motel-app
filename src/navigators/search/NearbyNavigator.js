@@ -42,12 +42,6 @@ const NearbyNavigator = () => {
     } = await Location.getCurrentPositionAsync({});
     setCurrentLocation({ latitude, longitude });
     dispatch(getNearbyPost({ lat: latitude, lng: longitude, radius }));
-    // mapRef.current.animateToRegion({
-    //   latitude: latitude,
-    //   longitude: longitude,
-    //   latitudeDelta: 0,
-    //   longitudeDelta: 0,
-    // });
   };
 
   return (
