@@ -1,17 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Text, FlatList, Alert } from 'react-native';
 import { Surface } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
 import { FAB, ListItemSwipeable } from '../../components/common';
 import { BILL_DETAILS_SCREEN, BILL_EDIT_SCREEN } from '../../constants/navigation';
 import BillingContext from '../../context/BillingContext';
-import { paidBillService } from '../../store/slices/billingSvSlide';
+import { deleteBillService, paidBillService } from '../../store/slices/billingSvSlide';
 import { vndFormatter } from '../../utils/common';
 
 function UnpaidBillsScreen(props) {
   const { loading, error, bills, refreshBills } = React.useContext(BillingContext);
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
   const handleCreateBill = () => navigation.navigate(BILL_EDIT_SCREEN);
   const handleItemPress = item => () => navigation.navigate(BILL_DETAILS_SCREEN, item);
 
@@ -29,7 +30,6 @@ function UnpaidBillsScreen(props) {
       })
       .catch(() => Alert.alert("Thông báo", "Hóa đơn không được xóa thử lại sau"))
   };
-
   return (
     <Surface style={styles.container}>
       {bills && (
