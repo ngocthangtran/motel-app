@@ -40,7 +40,6 @@ const postSlice = createSlice({
     builder.addCase(create.fulfilled, (state, action) => {
       state.error = '';
       state.loading = false;
-      alert('ok');
     });
     builder.addCase(create.pending, (state, action) => {
       state.error = '';

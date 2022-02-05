@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar } from '../../components';
@@ -25,7 +25,6 @@ function BillEditScreen(props) {
 
   useEffect(() => {
     dispatch(getRoomsWithoutBill(new Date()));
-    console.log(rooms);
   }, []);
 
   const mapToFormPickerItems = () => {
@@ -49,78 +48,81 @@ function BillEditScreen(props) {
     }, [room]);
     if (!room || !billSvInfo) return null;
     return (
-      <>
-        <FormHiddenField name='info' defaultValue={billSvInfo} />
-        <Chip icon='information-outline' style={styles.chip}>
-          Chi tiết
-        </Chip>
-        <FormMaskedInput disabled label='Số ngày' defaultValue={billSvInfo?.diffDays} unit='Ngày' />
-        <FormMaskedInput disabled label='Số tiền' defaultValue={billSvInfo?.rent} unit='VNĐ' />
-        {billSvInfo?.service.map(s => {
-          switch (s.feeBaseOnId) {
-            case '8b0871c8-5f03-4507-997f-c2008e67937d':
-              return (
-                <View key={s.serviceId}>
-                  <Chip icon={s.icon} style={styles.chip}>
-                    {s.name}
-                  </Chip>
-                  <FormRow>
-                    <FormMaskedInput
-                      name={s.serviceId + '_last'}
-                      label='Chỉ sốt bắt đầu'
-                      defaultValue={s?.lastValue}
-                      unit={s.unit}
-                    />
-                    <Gap />
-                    <FormMaskedInput
-                      name={s.serviceId + '_curr'}
-                      label='Chỉ sốt kết thúc'
-                      defaultValue={s?.currentValue}
-                      unit={s.unit}
-                    />
-                  </FormRow>
-                </View>
-              );
-            case 'd6122b9b-3718-4e05-bb5d-406e8efe7875': {
-              return (
-                <FormMaskedInput
-                  disabled
-                  key={s.serviceId}
-                  defaultValue={s.price}
-                  label={s.name}
-                  unit={s.unit}
-                />
-              );
-            }
-            case '6c368419-c07c-4b72-b8a0-a2b5c96ee030': {
-              return (
-                <View key={s.serviceId}>
-                  <Chip icon={s.icon} style={styles.chip}>
-                    {s.name}
-                  </Chip>
-                  <FormRow>
+      loading ? <ActivityIndicator size="large" color="#0000ff" />
+        : <>
+          <FormHiddenField name='info' defaultValue={billSvInfo} />
+          < Chip icon='information-outline' style={styles.chip} >
+            Chi tiết
+          </Chip >
+          <FormMaskedInput disabled label='Số ngày' defaultValue={billSvInfo?.diffDays} unit='Ngày' />
+          <FormMaskedInput disabled label='Số tiền' defaultValue={billSvInfo?.rent} unit='VNĐ' />
+          {
+            billSvInfo?.service.map(s => {
+              switch (s.feeBaseOnId) {
+                case '8b0871c8-5f03-4507-997f-c2008e67937d':
+                  return (
+                    <View key={s.serviceId}>
+                      <Chip icon={s.icon} style={styles.chip}>
+                        {s.name}
+                      </Chip>
+                      <FormRow>
+                        <FormMaskedInput
+                          name={s.serviceId + '_last'}
+                          label='Chỉ sốt bắt đầu'
+                          defaultValue={s?.lastValue}
+                          unit={s.unit}
+                        />
+                        <Gap />
+                        <FormMaskedInput
+                          name={s.serviceId + '_curr'}
+                          label='Chỉ sốt kết thúc'
+                          defaultValue={s?.currentValue}
+                          unit={s.unit}
+                        />
+                      </FormRow>
+                    </View>
+                  );
+                case 'd6122b9b-3718-4e05-bb5d-406e8efe7875': {
+                  return (
                     <FormMaskedInput
                       disabled
-                      name={s.serviceId}
-                      key={s.serviceId + '_'}
-                      label='Giá'
-                    />
-                    <Gap />
-                    <FormMaskedInput
                       key={s.serviceId}
-                      name={s.serviceId + '_rc'}
-                      label={'Số người sử dụng'}
+                      defaultValue={s.price}
+                      label={s.name}
                       unit={s.unit}
-                      defaultValue={billSvInfo.renterCount}
                     />
-                  </FormRow>
-                </View>
-              );
-            }
+                  );
+                }
+                case '6c368419-c07c-4b72-b8a0-a2b5c96ee030': {
+                  return (
+                    <View key={s.serviceId}>
+                      <Chip icon={s.icon} style={styles.chip}>
+                        {s.name}
+                      </Chip>
+                      <FormRow>
+                        <FormMaskedInput
+                          disabled
+                          name={s.serviceId}
+                          key={s.serviceId + '_'}
+                          label='Giá'
+                        />
+                        <Gap />
+                        <FormMaskedInput
+                          key={s.serviceId}
+                          name={s.serviceId + '_rc'}
+                          label={'Số người sử dụng'}
+                          unit={s.unit}
+                          defaultValue={billSvInfo.renterCount}
+                        />
+                      </FormRow>
+                    </View>
+                  );
+                }
+              }
+            })
           }
-        })}
-        <FormSubmitButton title='Tạo hóa đơn' onSubmit={handleSubmit} />
-      </>
+          <FormSubmitButton title='Tạo hóa đơn' onSubmit={handleSubmit} />
+        </>
     );
   };
 
@@ -167,7 +169,11 @@ const styles = StyleSheet.create({
   },
   chip: {
     marginBottom: 12,
-  },
+  }, loading: {
+    // backgroundColor: "black",
+    width: "100%",
+    height: 100
+  }
 });
 
 export default React.memo(BillEditScreen);

@@ -20,3 +20,11 @@ export const fetchBillSvInfo = (roomId, date) => {
 export const createBill = bill => {
   return apiClient.post('/manage/createbill', bill);
 };
+
+export const deleteBill = billId => {
+  return apiClient.delete(`/manage/deletebill?billId=${billId}`);
+}
+
+export const paidBill = billId => {
+  return apiClient.patch(`manage/paybill?billId=${billId}`);
+}

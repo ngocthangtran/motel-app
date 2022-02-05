@@ -1,10 +1,11 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { Button, Chip, List, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar } from '../../components';
 import { getBillDetails } from '../../store/slices/billingSlice';
+import { deleteBillService, paidBillService } from '../../store/slices/billingSvSlide';
 import { vndFormatter } from '../../utils/common';
 
 function BillDetailsScreen(props) {
@@ -16,6 +17,24 @@ function BillDetailsScreen(props) {
   useEffect(() => {
     dispatch(getBillDetails(billId));
   }, []);
+
+  const deleteBill = () => {
+    dispatch(deleteBillService({ billId })).unwrap()
+      .then(() => {
+        Alert.alert("Thông báo", "Hóa đơn đã được xóa");
+        navigation.goBack()
+      })
+      .catch(() => Alert.alert("Thông báo", "Hóa đơn không được xóa thử lại sau"))
+  }
+
+  const paidBill = () => {
+    dispatch(paidBillService({ billId })).unwrap()
+      .then(() => {
+        Alert.alert("Thông báo", "Hóa đơn đã được thanh toán");
+        navigation.goBack()
+      })
+      .catch(() => Alert.alert("Thông báo", "Hóa đơn không được thanh toán thử lại sau"))
+  }
 
   const handleBack = () => navigation.goBack();
   return (
@@ -57,8 +76,8 @@ function BillDetailsScreen(props) {
                 />
               );
             })}
-            <Button color='tomato'>Xóa hóa đơn</Button>
-            {!billDetails.status && <Button mode='contained'>Thanh toán hóa đơn</Button>}
+            <Button color='tomato' onPress={deleteBill}>Xóa hóa đơn</Button>
+            {!billDetails.status && <Button mode='contained' onPress={paidBill}>Thanh toán hóa đơn</Button>}
           </>
         )}
       </Surface>

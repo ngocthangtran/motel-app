@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, SectionList } from 'react-native';
+import { View, StyleSheet, Text, SectionList, Alert } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { ListItemSwipeable } from '../../components/common';
 import ServiceClosingContext from '../../context/ServiceClosingContext';
@@ -40,9 +40,9 @@ function ClosedServiceRoomsScreen(props) {
     dispatch(deleteClosedService(deleteBody))
       .unwrap()
       .then(() => {
-        alert('Deleted');
+        Alert.alert("Thông báo", "Xóa thành công chốt dịch vụ")
       })
-      .catch(() => alert('Error'));
+      .catch(() => Alert.alert("Thông báo", "Dịch vụ đã có hóa đơn không thể xóa"));
   };
   return (
     <View style={styles.container}>

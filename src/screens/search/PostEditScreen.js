@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { Appbar, HelperText, Surface, useTheme } from 'react-native-paper';
 import { AfterInteractions, Gap } from '../../components/common';
 import { useNavigation } from '@react-navigation/core';
@@ -50,8 +50,9 @@ function PostEditScreen(props) {
   const dispatch = useDispatch();
 
   const handleBack = () => navigation.goBack();
-  const handleSubmit = values => {
-    dispatch(createPost({ post: values }));
+  const handleSubmit = async values => {
+    await dispatch(createPost({ post: values }));
+    Alert.alert("Thông báo", "Bài đăng đã được đăng thành công vui lòng đợi quản trị viên kiểm duyệt bài đăng của bạn!");
   };
   const { colors } = useTheme();
 

@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { AppBar } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Chip, Surface, useTheme } from 'react-native-paper';
@@ -42,10 +42,10 @@ function ServiceClosingEditScreen(props) {
     dispatch(closingService(data))
       .unwrap()
       .then(() => {
-        alert('Chốt dịch vụ thành công');
+        Alert.alert("Thông báo", "Dữ liệu về dịch vụ đã được lưu lại thành công")
       })
       .catch(() => {
-        alert('Có lỗi xảy ra, vui lòng thử lại');
+        Alert.alert("Cảnh báo", "Có thể bạn đã để trống hoặc số dịch vụ mới không hợp lệ kiểm tra và thử lại")
       });
   };
 
