@@ -45,6 +45,12 @@ function AccountScreen(props) {
     else dispatch(setRole(role === 'MANAGER' ? 'FINDER' : 'MANAGER'));
   };
 
+  const handleNextFeature = () => {
+    alert('Tính năng này sẽ sớm xuất hiện trong phiên bản tiếp theo.');
+  };
+
+  const login = () => navigation.navigate(LOGIN);
+
   return (
     <Surface style={styles.container}>
       <Appbar.Header>
@@ -73,24 +79,28 @@ function AccountScreen(props) {
           <List.Item
             title='Chế độ tối'
             description='Bảo vệ mắt, lọc ánh sáng xanh'
+            onPress={handleNextFeature}
             left={props => <List.Icon {...props} icon='weather-sunny' />}
-            right={() => <Switch value={theme} onValueChange={handleChangeTheme} />}
+            right={() => <Switch disabled value={theme} onValueChange={handleChangeTheme} />}
           />
           <List.Item
             title='Ngôn ngữ'
             description='Ngôn ngữ hiển thị'
             left={props => <List.Icon {...props} icon='translate' />}
             right={props => <List.Icon {...props} icon='chevron-right' />}
-            onPress={onLangDialogOpen}
+            onPress={handleNextFeature}
+            disabled
           />
           <Divider />
-          <List.Item
-            title='Bài đã đăng'
-            description='Quản lý bài và trạng thái bài đăng'
-            left={props => <List.Icon {...props} icon='timeline-text-outline' />}
-            right={props => <List.Icon {...props} icon='chevron-right' />}
-            onPress={handlePostedPress}
-          />
+          {user && role === 'FINDER' && (
+            <List.Item
+              title='Bài đã đăng'
+              description='Quản lý bài và trạng thái bài đăng'
+              left={props => <List.Icon {...props} icon='timeline-text-outline' />}
+              right={props => <List.Icon {...props} icon='chevron-right' />}
+              onPress={handlePostedPress}
+            />
+          )}
           <List.Item
             title={role === 'MANAGER' ? 'Tìm phòng trọ' : 'Quản lý trọ'}
             description={
@@ -102,11 +112,11 @@ function AccountScreen(props) {
           />
           <Divider />
           <List.Item
-            title='Đăng xuất'
-            description='Thoát tài khoản'
-            left={props => <List.Icon {...props} icon='logout' />}
+            title={user ? 'Đăng xuất' : 'Đăng nhập'}
+            description={user ? 'Thoát tài khoản' : 'Đăng nhập tài khoản'}
+            left={props => <List.Icon {...props} icon={user ? 'logout' : 'login'} />}
             right={props => <List.Icon {...props} icon='chevron-right' />}
-            onPress={onLogoutDialogOpen}
+            onPress={user ? onLogoutDialogOpen : login}
           />
           <SelectLanguageDialog visible={langDialogVisible} onDismiss={onLangDialogClose} />
           <YesNoDialog

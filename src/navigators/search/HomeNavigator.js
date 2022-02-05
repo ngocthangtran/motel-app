@@ -1,11 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { ACCOUNT, FEED, LIKED, LISTINGS } from '../../constants/navigation';
-import {
-  AccountScreen,
-  LikedScreen,
-  ListingsScreen,
-} from '../../screens/search';
+import { AccountScreen, LikedScreen, ListingsScreen } from '../../screens/search';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import FeedNavigator from './FeedNavigator';
 
@@ -24,6 +20,7 @@ export default React.memo(() => {
         name={FEED}
         component={FeedNavigator}
         options={{
+          title: 'Tin mới',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name='home' size={size} color={color} />
           ),
@@ -33,6 +30,7 @@ export default React.memo(() => {
         name={LIKED}
         component={LikedScreen}
         options={{
+          title: 'Đã thích',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name='heart' size={size} color={color} />
           ),
@@ -42,6 +40,7 @@ export default React.memo(() => {
         name={ACCOUNT}
         component={AccountScreen}
         options={{
+          title: 'Tài khoản',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name='account' size={size} color={color} />
           ),

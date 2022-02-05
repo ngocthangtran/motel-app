@@ -24,9 +24,9 @@ const nearbySlice = createSlice({
       state.posts = action.payload;
       state.error = '';
     });
-    builder.addCase(getNearbyPost.rejected, state => {
+    builder.addCase(getNearbyPost.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
+      state.error = action.payload;
     });
   },
 });
