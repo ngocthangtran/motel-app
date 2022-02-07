@@ -23,6 +23,15 @@ function FormAddressPicker({ defaultWard }) {
     const ward = WARDS.find(w => {
       return w.wardId === defaultWard;
     });
+    const district = DISTRICTS.find(w => {
+      return w.districtId === ward.districtId;
+    });
+    const province = PROVINCES.find(w => {
+      return w.provinceId === district.provinceId;
+    });
+    setValue('province', province);
+    setValue('district', district);
+    setValue('ward', ward);
   }, []);
 
   const handleProvinceSelect = async p => {
@@ -81,14 +90,16 @@ function FormAddressPicker({ defaultWard }) {
         <Controller
           name={'ward'}
           control={control}
-          render={({ field: { value } }) => (
-            <Picker
-              placeholder='...'
-              items={wards}
-              onItemSelect={handleWardSelect}
-              selectedItem={value}
-            />
-          )}
+          render={({ field: { value } }) => {
+            return (
+              <Picker
+                placeholder='...'
+                items={wards}
+                onItemSelect={handleWardSelect}
+                selectedItem={value}
+              />
+            )
+          }}
           defaultValue={null}
         />
       </FormFieldWrapper>

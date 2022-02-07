@@ -37,6 +37,7 @@ function ApartmentEditScreen(props) {
   const navigation = useNavigation();
   const { services: apartmentServices } = useSelector(state => state.service);
   const { loading } = useSelector(state => state.apartment.create);
+  console.log(apartment)
   useEffect(() => {
     if (apartmentServices.length === 0) dispatch(getServices());
   }, []);
@@ -79,7 +80,7 @@ function ApartmentEditScreen(props) {
             required
             name='address'
             label='Địa chỉ cụ thể'
-            placeholder='Số nhà, tên đường, hẻm'
+            placeholder={apartment ? apartment.address : 'Số nhà, tên đường, hẻm'}
           />
           <FormRow>
             <FormDateTimePicker name='openTime' label='Giờ mở cửa' />

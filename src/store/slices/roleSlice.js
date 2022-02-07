@@ -3,7 +3,7 @@ const ROLES = ['FINDER', 'MANAGER'];
 
 const roleSlice = createSlice({
   name: 'role',
-  initialState: 'FINDER',
+  initialState: 'MANAGER',
   reducers: {
     setRole: (state, action) => {
       const role = action.payload;

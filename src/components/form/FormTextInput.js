@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { StyleSheet, TextInput } from 'react-native';
 import { useTheme } from 'react-native-paper';
@@ -16,11 +16,10 @@ function FormTextInput({
 }) {
   const {
     control,
-    getValues,
+    setValue,
     formState: { errors },
   } = useFormContext();
   const { colors } = useTheme();
-
   return (
     <FormFieldWrapper label={label} error={errors[name]?.message} required={required}>
       <Controller
