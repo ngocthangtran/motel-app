@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TextInput, Text } from 'react-native';
+import { View, StyleSheet, TextInput, Text, Alert } from 'react-native';
 import { ActivityIndicator, Surface } from 'react-native-paper';
 import {
   Form,
@@ -15,12 +15,13 @@ import * as Yup from 'yup';
 import AppBar from '../../components/AppBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { getServices } from '../../store/slices/serviceSlice';
-import { createApartment } from '../../store/slices/apartment';
+import apartment, { createApartment } from '../../store/slices/apartment';
 import { apartmentCreateMapper } from '../../utils/mappers';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { getAnApatment, reloadApartment } from '../../store/slices/apartment/get';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SERVICE_EDIT_SCREEN } from '../../constants/navigation';
+import { repairApartment } from '../../store/slices/apartment/repair';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(6).required(),
@@ -28,7 +29,7 @@ const validationSchema = Yup.object().shape({
   district: Yup.mixed().required(),
   ward: Yup.mixed().required(),
   address: Yup.string().min(10).required(),
-  closeTime: Yup.date().required(),
+  // closeTime: Yup.date().required(),
 });
 
 function ApartmentEditScreen(props) {
@@ -46,21 +47,31 @@ function ApartmentEditScreen(props) {
   }, []);
 
   const handleSubmit = async values => {
-    const apartment = apartmentCreateMapper(values);
-    const dispatchAction = await dispatch(createApartment({ apartment }));
-    const result = await unwrapResult(dispatchAction);
-    if (result.building) {
-      const data = {
-        buildingId: result.building.buildingId,
-        name: result.building.name,
-        address: result.building.address,
-      };
-      const uploadBdAction = reloadApartment({
-        type: 'add',
-        data,
-      });
-      dispatch(uploadBdAction);
-      return;
+    if (!apartment) {
+      const apartment = apartmentCreateMapper(values);
+      const dispatchAction = await dispatch(createApartment({ apartment }));
+      const result = await unwrapResult(dispatchAction);
+      if (result.building) {
+        const data = {
+          buildingId: result.building.buildingId,
+          name: result.building.name,
+          address: result.building.address,
+        };
+        const uploadBdAction = reloadApartment({
+          type: 'add',
+          data,
+        });
+        dispatch(uploadBdAction);
+        return;
+      }
+    } else {
+      const apartment = apartmentCreateMapper(values, apartmentDetails.buildingId);
+      dispatch(repairApartment(apartment))
+        .unwrap()
+        .then(() => {
+          Alert.alert("Thông báo", "Cập nhật tòa nhà thành công")
+        })
+        .catch(() => Alert.alert("Thông báo", "Lỗi cập nhật tòa nhà"));
     }
   };
 
@@ -69,7 +80,7 @@ function ApartmentEditScreen(props) {
 
   return (
     <Surface style={styles.container}>
-      <AppBar title={apartment?"Sửa tòa nhà":'Thêm tòa nhà'} onBack={handleBack} />
+      <AppBar title={apartment ? "Sửa tòa nhà" : 'Thêm tòa nhà'} onBack={handleBack} />
       <View style={styles.contentContainer}>
         <Form validationSchema={validationSchema}>
           <FormTextInput
@@ -83,19 +94,20 @@ function ApartmentEditScreen(props) {
             required
             name='address'
             label='Địa chỉ cụ thể'
-            placeholder={apartment ? apartment.address : 'Số nhà, tên đường, hẻm'}
+            defaultValue={apartment?.address}
+            placeholder={'Số nhà, tên đường, hẻm'}
           />
           <FormRow>
             <FormDateTimePicker name='openTime' label='Giờ mở cửa' />
             <Gap />
-            <FormDateTimePicker required name='closeTime' label='Giờ đóng cửa' />
+            <FormDateTimePicker name='closeTime' label='Giờ đóng cửa' />
           </FormRow>
           <FormUtilsPicker
             onAdd={handleAddUtil}
             name='services'
             label='Tiện ích tòa'
             items={apartmentServices}
-            defaultValue={apartment ? apartmentDetails.service : undefined}
+            defaultValue={apartment && apartmentDetails ? apartmentDetails.service : undefined}
           />
           <FormSubmitButton title={apartment ? "Lưu tòa nhà" : 'Tạo tòa nhà'} onSubmit={handleSubmit} loading={loading} />
         </Form>

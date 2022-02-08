@@ -17,3 +17,7 @@ export const getApartmentApi = async (buildingId) => {
 export const deleteApartmentApi = async params => {
   return apiClient.delete(`${endPoint}/delete/${params.buildingId}`, params);
 }
+
+export const repairApartmentApi = async (params) => {
+  return apiClient.post(`${endPoint}/repair`, params);
+}
