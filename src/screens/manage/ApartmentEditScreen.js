@@ -18,7 +18,7 @@ import { getServices } from '../../store/slices/serviceSlice';
 import { createApartment } from '../../store/slices/apartment';
 import { apartmentCreateMapper } from '../../utils/mappers';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { reloadApartment } from '../../store/slices/apartment/get';
+import { getAnApatment, reloadApartment } from '../../store/slices/apartment/get';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SERVICE_EDIT_SCREEN } from '../../constants/navigation';
 
@@ -37,9 +37,12 @@ function ApartmentEditScreen(props) {
   const navigation = useNavigation();
   const { services: apartmentServices } = useSelector(state => state.service);
   const { loading } = useSelector(state => state.apartment.create);
-  console.log(apartment)
+  const { apartmentDetails } = useSelector(state => state.apartment.get);
+
   useEffect(() => {
     if (apartmentServices.length === 0) dispatch(getServices());
+    if (!apartment) return
+    dispatch(getAnApatment({ buildingId: apartment.buildingId }))
   }, []);
 
   const handleSubmit = async values => {
@@ -66,7 +69,7 @@ function ApartmentEditScreen(props) {
 
   return (
     <Surface style={styles.container}>
-      <AppBar title='Thêm tòa nhà' onBack={handleBack} />
+      <AppBar title={apartment?"Sửa tòa nhà":'Thêm tòa nhà'} onBack={handleBack} />
       <View style={styles.contentContainer}>
         <Form validationSchema={validationSchema}>
           <FormTextInput
@@ -92,8 +95,9 @@ function ApartmentEditScreen(props) {
             name='services'
             label='Tiện ích tòa'
             items={apartmentServices}
+            defaultValue={apartment ? apartmentDetails.service : undefined}
           />
-          <FormSubmitButton title='Tạo tòa nhà' onSubmit={handleSubmit} loading={loading} />
+          <FormSubmitButton title={apartment ? "Lưu tòa nhà" : 'Tạo tòa nhà'} onSubmit={handleSubmit} loading={loading} />
         </Form>
       </View>
     </Surface>

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import {
   FlatList,
@@ -15,13 +15,18 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import useDisclosure from '../../hooks/useDisclosure';
 import { vndFormatter } from '../../utils/common';
 
-function FormUtilsPicker({ name, label, items = [], onAdd }) {
+function FormUtilsPicker({ name, label, items = [], defaultValue, onAdd }) {
   const {
     control,
     formState: { errors },
     getValues,
     setValue,
   } = useFormContext();
+
+  useEffect(() => {
+    if (!defaultValue) return
+    setValue(name, defaultValue)
+  }, [defaultValue])
 
   const [isVisible, onOpen, onClose] = useDisclosure();
   const scrollRef = useRef();
@@ -50,9 +55,8 @@ function FormUtilsPicker({ name, label, items = [], onAdd }) {
           index !== -1 ? <List.Icon {...props} icon='check-circle-outline' /> : null
         }
         title={item.name}
-        description={`${
-          item.price == 0 ? 'Miễn phí' : vndFormatter(item.price) + ' / ' + item.unit
-        }`}
+        description={`${item.price == 0 ? 'Miễn phí' : vndFormatter(item.price) + ' / ' + item.unit
+          }`}
       />
     );
   };
@@ -71,6 +75,7 @@ function FormUtilsPicker({ name, label, items = [], onAdd }) {
           <>
             <ScrollView style={styles.scroll} horizontal ref={scrollRef}>
               {value.map(u => {
+                // console.log(u)
                 return (
                   <TouchableOpacity style={styles.item} key={u.serviceId} onPress={handleRemove(u)}>
                     <MaterialCommunityIcons name={u.icon || 'toolbox-outline'} size={28} />

@@ -10,6 +10,9 @@ export const fetchApartments = async () => {
   return apiClient.get(`${endPoint}`);
 };
 
+export const getApartmentApi = async (buildingId) => {
+  return apiClient.get(`${endPoint}/${buildingId}`);
+}
 
 export const deleteApartmentApi = async params => {
   return apiClient.delete(`${endPoint}/delete/${params.buildingId}`, params);

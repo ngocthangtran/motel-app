@@ -1,15 +1,22 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchApartments } from '../../../api/apartment';
+import { fetchApartments, getApartmentApi } from '../../../api/apartment';
 
 const getApartment = createAsyncThunk('apartment/get', async () => {
   const data = await fetchApartments();
   return data;
 });
 
+const getAnApatment = createAsyncThunk('apatment/getDetails', async params => {
+  const { buildingId } = params;
+  const data = await getApartmentApi(buildingId);
+  return data;
+})
+
 const getApartmentSlice = createSlice({
   name: 'apartment/get',
   initialState: {
     apartments: [],
+    apartmentDetails: null,
     loading: false,
     error: null,
   },
@@ -39,9 +46,25 @@ const getApartmentSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+
+    builder.addCase(getAnApatment.pending, state => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builder.addCase(getAnApatment.fulfilled, (state, action) => {
+      state.apartmentDetails = action.payload;
+      state.loading = false;
+      state.error = null;
+    });
+
+    builder.addCase(getAnApatment.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
 
-export { getApartment };
+export { getApartment, getAnApatment };
 export const { reloadApartment } = getApartmentSlice.actions;
 export default getApartmentSlice.reducer;
