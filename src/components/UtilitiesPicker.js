@@ -2,7 +2,13 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import UtilityItem from './UtilityItem';
 
-function UtilitiesPicker({ items, selectedItems, disable = false, onSelectItem, onRemoveItem }) {
+function UtilitiesPicker({
+  items = [],
+  selectedItems = [],
+  disable = false,
+  onSelectItem,
+  onRemoveItem,
+}) {
   const handlePress = item => () => {
     selectedItems.find(i => i.utilityId === item.utilityId)
       ? onRemoveItem(item)

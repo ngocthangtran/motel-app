@@ -56,7 +56,7 @@ function PostEditScreen(props) {
   };
   const handleSubmit = values => {
     if (!post) dispatch(createPost({ post: values }));
-    else null; // handle update
+    else console.log(values);
   };
   const { colors } = useTheme();
   const POST_TYPES = [
