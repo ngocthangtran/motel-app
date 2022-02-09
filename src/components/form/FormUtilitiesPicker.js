@@ -4,7 +4,7 @@ import { UTILITIES } from '../../constants/form';
 import { Controller, useFormContext } from 'react-hook-form';
 import FormFieldWrapper from './FormFieldWrapper';
 
-function FormUtilitiesPicker({ name, label }) {
+function FormUtilitiesPicker({ name, label, defaultValue = [] }) {
   const {
     control,
     formState: { errors },
@@ -19,7 +19,7 @@ function FormUtilitiesPicker({ name, label }) {
 
   const handleRemove = i => {
     const value = getValues(name);
-    const filtered = value.filter(u => u !== i);
+    const filtered = value.filter(u => u.utilityId !== i.utilityId);
     setValue(name, filtered);
   };
 
@@ -36,7 +36,7 @@ function FormUtilitiesPicker({ name, label }) {
             onRemoveItem={handleRemove}
           />
         )}
-        defaultValue={[]}
+        defaultValue={defaultValue}
       />
     </FormFieldWrapper>
   );

@@ -6,6 +6,7 @@ import { Appbar, IconButton, List, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AfterInteractions, Container, SwipeableAction } from '../../components/common';
 import { deletePost, getPostedPosts } from '../../store/slices/postedSlice';
+import { POST_EDIT } from '../../constants/navigation';
 
 function PostedScreen(props) {
   const navigation = useNavigation();
@@ -29,6 +30,10 @@ function PostedScreen(props) {
     dispatch(deletePost({ postId: post.postId }));
   };
 
+  const handleEdit = postId => () => {
+    navigation.navigate(POST_EDIT, postId);
+  };
+
   return (
     <Surface style={styles.container}>
       <Appbar.Header style={{ height: 40 }}>
@@ -45,7 +50,11 @@ function PostedScreen(props) {
               <Swipeable
                 renderRightActions={() => {
                   return (
-                    <SwipeableAction icon='file-document-edit-outline' processing={deleting} />
+                    <SwipeableAction
+                      icon='file-document-edit-outline'
+                      processing={deleting}
+                      onPress={handleEdit(item.postId)}
+                    />
                   );
                 }}
                 renderLeftActions={() => {

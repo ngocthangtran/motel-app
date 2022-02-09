@@ -5,7 +5,7 @@ import { TextInput } from 'react-native-paper';
 import ImageInputList from '../common/ImageInputList';
 import FormFieldWrapper from './FormFieldWrapper';
 
-function FormImagePicker({ name, label, placeholder }) {
+function FormImagePicker({ name, label, placeholder, defaultValue = [] }) {
   const {
     control,
     formState: { errors },
@@ -28,13 +28,9 @@ function FormImagePicker({ name, label, placeholder }) {
         name={name}
         control={control}
         render={({ field: { value } }) => (
-          <ImageInputList
-            imageUris={value}
-            onAddImage={handleAdd}
-            onRemoveImage={handleRemove}
-          />
+          <ImageInputList imageUris={value} onAddImage={handleAdd} onRemoveImage={handleRemove} />
         )}
-        defaultValue={[]}
+        defaultValue={defaultValue}
       />
     </FormFieldWrapper>
   );

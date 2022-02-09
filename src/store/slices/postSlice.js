@@ -36,6 +36,12 @@ const postSlice = createSlice({
     loading: false,
     deleting: false,
   },
+  reducers: {
+    clearPostState: state => {
+      state = { ...state, post: null };
+      return state;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(create.fulfilled, (state, action) => {
       state.error = '';
@@ -83,4 +89,5 @@ const postSlice = createSlice({
 });
 
 export { create, getShowcase, getPostDetails };
+export const { clearPostState } = postSlice.actions;
 export default postSlice.reducer;

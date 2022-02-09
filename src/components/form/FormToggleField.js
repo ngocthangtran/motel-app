@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { Text, ToggleButton } from 'react-native-paper';
 import FormFieldWrapper from './FormFieldWrapper';
 
-function FormToggleField({ items, valueField, titleField, name, label }) {
+function FormToggleField({ items, valueField, titleField, name, label, defaultValue }) {
   const {
     control,
     setValue,
@@ -32,7 +32,7 @@ function FormToggleField({ items, valueField, titleField, name, label }) {
             ))}
           </ToggleButton.Row>
         )}
-        defaultValue={valueField ? items[0][valueField] : items[0]}
+        defaultValue={defaultValue || (valueField ? items[0][valueField] : items[0])}
       />
     </FormFieldWrapper>
   );

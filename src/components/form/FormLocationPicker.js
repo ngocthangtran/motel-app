@@ -62,8 +62,8 @@ function FormLocationPicker({ name, label, placeholder, defaultValue, numeric = 
               ref={mapRef}
               style={StyleSheet.absoluteFillObject}
               initialRegion={{
-                latitude: value.latitude,
-                longitude: value.longitude,
+                latitude: defaultValue.latitude || 0,
+                longitude: defaultValue.longitude || 0,
                 latitudeDelta: 0,
                 longitudeDelta: 0,
               }}
