@@ -51,7 +51,7 @@ function PostEditScreen(props) {
   const postId = useRoute().params;
 
   const handleBack = () => {
-    dispatch(clearPostState());
+
     navigation.goBack();
   };
   const handleSubmit = values => {
@@ -67,7 +67,13 @@ function PostEditScreen(props) {
   useEffect(() => {
     if (postId) dispatch(getPostDetails({ postId }));
   }, []);
-
+  useEffect(() => {
+    return () => {
+      if (post) {
+        dispatch(clearPostState());
+      }
+    }
+  })
   return (
     <Surface style={{ flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: '#fff' }}>
