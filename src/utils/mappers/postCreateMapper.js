@@ -17,12 +17,20 @@ export default post => {
   data.append('latitude', post.location.latitude);
   data.append('longitude', post.location.longitude);
 
-  post.images.forEach((image, index) =>
-    data.append('images', {
-      name: 'image' + index,
-      type: 'image/jpeg',
-      uri: image,
-    })
+  post.images.forEach((image, index) => {
+    const check = image.split(":", 1)
+    if (check[0] === "http") {
+      return data.append('imagesOld', image)
+    } else {
+      return data.append('images', {
+        name: 'image' + index,
+        type: 'image/jpeg',
+        uri: image,
+      })
+    }
+
+
+  }
   );
 
   post.utils.forEach(util => data.append('utilityIds', util.utilityId));

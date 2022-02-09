@@ -15,7 +15,7 @@ import {
 } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AfterInteractions, Container, ExpandableText } from '../../components/common';
-import { getPostDetails } from '../../store/slices/postSlice';
+import { clearPostState, getPostDetails } from '../../store/slices/postSlice';
 import { SliderBox } from 'react-native-image-slider-box';
 import { MaskedText } from 'react-native-mask-text';
 import { UtilitiesPicker, UtilityItem } from '../../components';
@@ -31,7 +31,15 @@ function PostDetailsScreen(props) {
 
   useEffect(() => {
     dispatch(getPostDetails({ postId: params.postId }));
+
   }, []);
+  useEffect(() => {
+    return () => {
+      if (post) {
+        dispatch(clearPostState());
+      }
+    }
+  })
 
   const mapToSliderImages = () => {
     return post.postImages.map(p => {
@@ -133,7 +141,7 @@ function PostDetailsScreen(props) {
                     latitude: +post.latitude,
                     longitude: +post.longitude,
                   }}
-                  // image={{ uri: 'custom_pin' }}
+                // image={{ uri: 'custom_pin' }}
                 />
               </MapView>
             </Surface>

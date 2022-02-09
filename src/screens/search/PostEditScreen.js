@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Alert, StyleSheet, Text } from 'react-native';
 import { Appbar, HelperText, Surface, useTheme } from 'react-native-paper';
 import { AfterInteractions, Gap } from '../../components/common';
 import { useNavigation, useRoute } from '@react-navigation/core';
@@ -18,7 +18,7 @@ import {
 import * as Yup from 'yup';
 import FormAddressPicker from '../../components/form/FormAddressPicker';
 import { ROOM_TYPES } from '../../constants/form';
-import { clearPostState, create as createPost, getPostDetails } from '../../store/slices/postSlice';
+import { clearPostState, create as createPost, getPostDetails, repairPostSlide } from '../../store/slices/postSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const validationSchema = Yup.object().shape({
@@ -56,7 +56,19 @@ function PostEditScreen(props) {
   };
   const handleSubmit = values => {
     if (!post) dispatch(createPost({ post: values }));
-    else console.log(values);
+    else {
+      dispatch(repairPostSlide({ ...values, postId }))
+        .unwrap()
+        .then(() => {
+          Alert.alert("Thông báo", 'Sửa bài đăng thành công')
+          dispatch(clearPostState());
+          navigation.goBack();
+        })
+        .catch(() => {
+          Alert.alert("Thông báo", 'Sửa bài đăng không thành công hãy thử lại sau')
+          navigation.goBack();
+        })
+    }
   };
   const { colors } = useTheme();
   const POST_TYPES = [
@@ -73,7 +85,7 @@ function PostEditScreen(props) {
         dispatch(clearPostState());
       }
     }
-  })
+  }, [])
   return (
     <Surface style={{ flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: '#fff' }}>

@@ -5,6 +5,7 @@ const {
   createPost,
   getMainPosts,
   getPostDetails: getPostDetailsService,
+  reqairPostApi,
 } = require('../../api/post');
 
 const create = createAsyncThunk('post/create', async params => {
@@ -12,6 +13,11 @@ const create = createAsyncThunk('post/create', async params => {
   const data = postCreateMapper(post);
   await createPost(data);
 });
+
+const repairPostSlide = createAsyncThunk('post/repair', async params => {
+  const data = postCreateMapper(params);
+  return await reqairPostApi(data, params.postId);
+})
 
 const getShowcase = createAsyncThunk('post/showcase', async params => {
   const data = await getMainPosts();
@@ -84,10 +90,22 @@ const postSlice = createSlice({
       state.error = action.error.message;
       state.loading = false;
     });
-    //
+    //post repair
+    builder.addCase(repairPostSlide.fulfilled, (state) => {
+      state.error = null;
+      state.loading = false;
+    });
+    builder.addCase(repairPostSlide.pending, (state) => {
+      state.error = null;
+      state.loading = true;
+    });
+    builder.addCase(repairPostSlide.rejected, (state) => {
+      state.error = action.error;
+      state.loading = false;
+    });
   },
 });
 
-export { create, getShowcase, getPostDetails };
+export { create, getShowcase, getPostDetails, repairPostSlide };
 export const { clearPostState } = postSlice.actions;
 export default postSlice.reducer;

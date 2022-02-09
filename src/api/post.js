@@ -14,6 +14,10 @@ export const createPost = post => {
   return apiClient.post(`${endpoint}/`, post);
 };
 
+export const reqairPostApi = (post, postId) => {
+  return apiClient.post(`${endpoint}/repair/${postId}`, post)
+}
+
 export const getPostDetails = id => {
   return apiClient.get(`${endpoint}/viewpost/${id}`);
 };
