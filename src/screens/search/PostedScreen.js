@@ -6,7 +6,7 @@ import { Appbar, IconButton, List, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AfterInteractions, Container, SwipeableAction } from '../../components/common';
 import { deletePost, getPostedPosts } from '../../store/slices/postedSlice';
-import { POST_EDIT } from '../../constants/navigation';
+import { POST_DETAILS, POST_EDIT } from '../../constants/navigation';
 
 function PostedScreen(props) {
   const navigation = useNavigation();
@@ -15,6 +15,9 @@ function PostedScreen(props) {
   const dispatch = useDispatch();
 
   const handleBack = () => navigation.goBack();
+  const handleShowDetail = item => () => {
+    navigation.navigate(POST_DETAILS, { postId: item.postId });
+  }
 
   useEffect(() => {
     dispatch(getPostedPosts());
@@ -24,7 +27,7 @@ function PostedScreen(props) {
     dispatch(getPostedPosts());
   }, [user]);
 
-  const handleRefresh = () => {};
+  const handleRefresh = () => { };
 
   const handleDeletePost = post => () => {
     dispatch(deletePost({ postId: post.postId }));
@@ -68,6 +71,7 @@ function PostedScreen(props) {
                 }}
               >
                 <List.Item
+                  onPress={handleShowDetail(item)}
                   title={item.title}
                   description={item.address}
                   right={() => <List.Icon icon='chevron-right' />}

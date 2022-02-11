@@ -1,9 +1,12 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { Button, Chip, List, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar } from '../../components';
+import { Gap } from '../../components/common';
+import { FormMaskedInput, FormRow } from '../../components/form';
 import { getBillDetails } from '../../store/slices/billingSlice';
 import { deleteBillService, paidBillService } from '../../store/slices/billingSvSlide';
 import { vndFormatter } from '../../utils/common';
@@ -64,18 +67,43 @@ function BillDetailsScreen(props) {
               title='Ngày kết thúc'
               description={billDetails.endDay}
             />
-            <Chip icon='bell-check-outline'>Dịch vụ</Chip>
+            <Chip icon='bell-check-outline' style={{ marginBottom: 12 }}>Dịch vụ</Chip>
+            <ScrollView>
+              {billDetails.services.map((sv, i) => {
+                return (
+                  <View key={i}>
+                    <Chip
+                      style={{ marginBottom: 12 }}
+                      icon={sv.icon}
+                      textStyle={{ fontWeight: 'bold' }}
+                    >
+                      {sv.nameService}
+                    </Chip>
+                    <List.Item
+                      title={`Thành tiền: ${vndFormatter(sv.intoMoney)}`}
+                      description={`Giá dịch vụ: ${vndFormatter(sv.price)} /${sv.unit}`}
+                      right={props => <List.Icon {...props} icon={sv.icon} />}
+                    />
+                    {
+                      sv.lastValue &&
+                      <View
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          alignItems: 'flex-end',
+                          paddingRight: 10
+                        }}
+                      >
+                        <Text >
+                          Đã sử dụng: {sv.currentValue - sv.lastValue}
+                        </Text>
+                      </View>
+                    }
+                  </View>
+                );
+              })}
+            </ScrollView>
 
-            {billDetails.services.map(s => {
-              return (
-                <List.Item
-                  key={s.nameService}
-                  title={s.nameService}
-                  description={vndFormatter(s.price)}
-                  left={props => <List.Icon {...props} icon={s.icon || 'room-service-outline'} />}
-                />
-              );
-            })}
             <Button color='tomato' onPress={deleteBill}>Xóa hóa đơn</Button>
             {!billDetails.status && <Button mode='contained' onPress={paidBill}>Thanh toán hóa đơn</Button>}
           </>
