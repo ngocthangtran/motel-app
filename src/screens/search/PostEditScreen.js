@@ -55,7 +55,17 @@ function PostEditScreen(props) {
     navigation.goBack();
   };
   const handleSubmit = values => {
-    if (!post) dispatch(createPost({ post: values }));
+    if (!post)
+      dispatch(createPost({ post: values }))
+        .unwrap()
+        .then(() => {
+          Alert.alert("Thông báo", 'Đăng bài thành công, bài đăng của bạn sẽ được các admin phê duyệt trước khi xuất hiện trên hệ thống');
+          navigation.goBack();
+        })
+        .catch(() => {
+          Alert.alert("Lỗi", 'Bài đăng chưa thể đăng');
+          navigation.goBack();
+        })
     else {
       dispatch(repairPostSlide({ ...values, postId }))
         .unwrap()
