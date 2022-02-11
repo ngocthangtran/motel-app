@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, useFormContext, useWatch } from 'react-hook-form';
-import { StyleSheet, Text } from 'react-native';
+import { Alert, StyleSheet, Text } from 'react-native';
 import { Button, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar } from '../../components';
@@ -65,12 +65,26 @@ function ServiceEditScreen(props) {
     };
     if (item) {
       service.serviceId = item.serviceId;
-      dispatch(updateService({ service }));
+      dispatch(updateService({ service })).unwrap()
+        .then(() => {
+          Alert.alert("Thông báo", "Dữ liệu đã được lưu lại.");
+          navigation.goBack();
+        })
+        .catch(() => {
+          Alert.alert("Thông báo", "Có lỗi xảy ra! thử lại sau.");
+          navigation.goBack();
+        });
     } else {
       dispatch(createService({ service }))
         .unwrap()
-        .then(() => alert('ok'))
-        .catch(() => alert('Loi'));
+        .then(() => {
+          Alert.alert("Thông báo", "Dịch vụ đã được lưu lại.");
+          navigation.goBack();
+        })
+        .catch(() => {
+          Alert.alert("Lỗi", "Không thể tạo dịch vụ thử lại sau")
+          navigation.goBack();
+        });
     }
   };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { Surface } from 'react-native-paper';
 import { AppBar } from '../../components';
 import { Form, FormDateTimePicker, FormSubmitButton, FormTextInput } from '../../components/form';
@@ -32,10 +32,10 @@ function TenantEditScreen(props) {
             data: res,
           })
         );
-        alert('ok');
+        Alert.alert("Thông báo", "Thêm người dùng thành công");
       })
       .catch(err => {
-        alert('error');
+        Alert.alert("Lỗi", "Lỗi thêm người dùng")
       });
   };
   return (

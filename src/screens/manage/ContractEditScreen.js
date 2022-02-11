@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable, Alert } from 'react-native';
 import { List, Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar } from '../../components';
@@ -67,10 +67,10 @@ function ContractEditScreen(props) {
     dispatch(createContractAction(contract))
       .unwrap()
       .then(() => {
-        alert('ok');
+        Alert.alert("Thông báo", "Tạo hợp đồng thành công")
       })
       .catch(() => {
-        alert('err');
+        Alert.alert("Lỗi", "Lỗi tạo hợp đồng")
       });
   };
   const handleBack = () => navigation.goBack();

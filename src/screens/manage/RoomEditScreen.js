@@ -1,7 +1,7 @@
 import { useRoute, useNavigation } from '@react-navigation/native';
 import React, { useContext } from 'react';
 import { useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import { Surface } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar } from '../../components';
@@ -56,10 +56,10 @@ function RoomEditScreen(props) {
           },
         });
         dispatch(loadRoomAction);
-        alert('Tạo thành công');
+        Alert.alert("Thông báo", "Tạo phòng thành công")
       })
       .catch(err => {
-        alert('Cannot create room');
+        Alert.alert("Lỗi", "Không thể tạo phòng")
       });
   };
 

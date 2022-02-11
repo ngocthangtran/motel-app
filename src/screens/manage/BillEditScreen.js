@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar } from '../../components';
@@ -131,11 +131,11 @@ function BillEditScreen(props) {
     dispatch(createBill(data))
       .unwrap()
       .then(() => {
-        alert('Tạo hóa đơn thành công');
+        Alert.alert("Thông báo", "Tạo hóa đơn thành công")
         navigation.goBack();
       })
       .catch(() => {
-        alert('Lỗi tạo hóa đơn');
+        Alert.alert("Lỗi", "Lỗi tạo hóa đơn");
       });
   };
   return (
