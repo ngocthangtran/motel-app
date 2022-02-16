@@ -29,8 +29,8 @@ function ContractDetailsScreen(props) {
         onPress: () => {
           dispatch(deleteContractAction(contractId))
             .unwrap()
-            .then(() => alert('Deleted'))
-            .catch(() => alert('Error'));
+            .then(() => Alert.alert("Thông báo", "Hợp đồng đã xóa thành công"))
+            .catch(() => Alert.alert("Lỗi", "Có lỗi xảy ra xin thử lại sau"));
         },
       },
     ]);

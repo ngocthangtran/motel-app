@@ -6,22 +6,46 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { SwipeableAction } from '../../components/common';
 import { useNavigation } from '@react-navigation/native';
 import { CONTRACT_DETAILS_SCREEN } from '../../constants/navigation';
+import { deleteContractAction, terminateContract } from '../../store/slices/contractSlide';
+import { useDispatch } from 'react-redux';
 
 function ContractActiveScreen(props) {
   const { contracts, error, loading, onRefresh } = React.useContext(ContractContext);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleTerminateContract = contract => () => {
     Alert.alert('Kết thúc hợp đồng', 'Bạn có chắc chắn muốn kết thúc hợp đồng?', [
       { text: 'Không' },
-      { text: 'Kết thúc' },
+      {
+        text: 'Kết thúc',
+        onPress: () => {
+          dispatch(terminateContract(contract.contractId)).unwrap()
+            .then(() => {
+              Alert.alert("Thông báo", "Hợp đồng đã được kết thúc");
+            })
+            .catch(() => Alert.alert("Lỗi", "Không thể kết thúc hợp đồng"))
+        }
+      },
     ]);
   };
 
   const handleDeleteContract = contract => () => {
     Alert.alert('Xóa hợp đồng', 'Bạn có chắc chắn muốn xóa hợp đồng?', [
       { text: 'Không' },
-      { text: 'Xóa' },
+      {
+        text: 'Xóa',
+        onPress: () => {
+          dispatch(deleteContractAction(contract.contractId))
+            .unwrap()
+            .then(() => {
+              Alert.alert("Thông báo", "Hợp đồng đã xóa thành công");
+            })
+            .catch(() => {
+              Alert.alert("Lỗi", "Có lỗi xảy ra xin thử lại sau");
+            });
+        }
+      },
     ]);
   };
 

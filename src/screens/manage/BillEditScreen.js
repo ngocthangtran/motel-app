@@ -140,7 +140,7 @@ function BillEditScreen(props) {
   };
   return (
     <View style={styles.container}>
-      <AppBar title='Tạo hóa đơn' />
+      <AppBar title='Tạo hóa đơn' onBack={() => navigation.goBack()} />
       <View style={styles.contentContainer}>
         <Form>
           <Chip icon='information-outline' style={styles.chip}>

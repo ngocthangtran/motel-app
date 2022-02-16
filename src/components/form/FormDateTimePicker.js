@@ -32,7 +32,7 @@ function FormDateTimePicker({
   };
   const getPlaceholder = value => {
     if (mode === 'time') return value && value.getHours() + ' : ' + value.getMinutes();
-    else return value && value.getDate() + '/' + value.getMonth() + 1 + '/' + value.getFullYear();
+    else return value && `${value.getDate()}/${value.getMonth() + 1}/${value.getFullYear()}`
   };
 
   return (
