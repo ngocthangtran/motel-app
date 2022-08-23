@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile_v4",
-    "slug": "mobile_v4",
+    "name": "mobilev4",
+    "slug": "mobilev4",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
@@ -14,7 +14,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier":"com.motel.motelapplication"
     },
     "android": {
       "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"],
@@ -22,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.motel.thesis",
+      "package": "com.motel.motelapplication",
       "config": {
         "googleSignIn": {
           "apiKey": "AIzaSyCFiS-udUpVe0GIkRdA_yscZcwAGPNSO04",
