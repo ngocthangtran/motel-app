@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-// import * as Google from 'expo-google-app-auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Snackbar, Surface } from 'react-native-paper';
 import { login } from '../store/slices/authSlice';
@@ -16,35 +15,31 @@ WebBrowser.maybeCompleteAuthSession();
 
 function LoginScreen(props) {
   const navigation = useNavigation();
-  const [request, response, promptAsync] = Google.useAuthRequest(googleLoginCfg);
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(googleLoginCfg);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (response?.type === 'success') {
-      const { authentication } = response;
-      console.log(authentication.accessToken)
-      dispatch(login({ token: authentication.accessToken, provider: 'Google' }));
-      // await new Promise(res => setTimeout(res, 1000));
-      // if (error) showError();
-      // else navigation.goBack();
+      if(response.params.id_token){
+        handleGoogleLogin(response.params.id_token)
+      }
     }
   }, [response]);
-  // const [errorVisible, showError, dismissError] = useDisclosure();
-  // const { user, error } = useSelector(state => state.auth);
+  const [errorVisible, showError, dismissError] = useDisclosure();
+  const { user, error } = useSelector(state => state.auth);
 
   // // console.log(googleLoginCfg);
 
-  // const handleGoogleLogin = async () => {
-  //   try {
-  //     const { idToken } = await Google.logInAsync(googleLoginCfg);
-  //     dispatch(login({ token: idToken, provider: 'Google' }));
-  //     await new Promise(res => setTimeout(res, 1000));
-  //     if (error) showError();
-  //     else navigation.goBack();
-  //   } catch (error) {
-  //     alert(error.message);
-  //   }
-  // };
+  const handleGoogleLogin = async (idToken) => {
+    try {
+      dispatch(login({ token: idToken, provider: 'Google' }));
+      await new Promise(res => setTimeout(res, 1000));
+      if (error) showError();
+      else navigation.goBack();
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const handleBackButtonPress = () => navigation.goBack();
 
@@ -65,18 +60,6 @@ function LoginScreen(props) {
           Back
         </Button>
       </Surface>
-      {/* <Snackbar
-        visible={errorVisible}
-        onDismiss={dismissError}
-        action={{
-          label: 'Undo',
-          onPress: () => {
-            // Do something
-          },
-        }}
-      >
-        Hey there! I'm a Snackbar.
-      </Snackbar> */}
     </SafeAreaContainer>
   );
 }
